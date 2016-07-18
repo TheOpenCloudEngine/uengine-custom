@@ -60,13 +60,7 @@
             <version>${uengine.essencia.version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.uengine</groupId>
-            <artifactId>uengine-social-bpm-portal</artifactId>
-            <type>test-jar</type>
-            <version>${uengine.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
