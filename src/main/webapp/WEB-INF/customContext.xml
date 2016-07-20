@@ -9,14 +9,14 @@
        ">
 
 
+    <context:component-scan base-package="com.abc" />
     <context:component-scan base-package="org.uengine"/>
-    <context:component-scan base-package="com.abc"/>
 
     <import resource="applicationContext.xml"/>
 
 
     <bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">
-        <property name="localBasePath" value="D:\\Project\\codi"/>
+        <property name="localBasePath" value="${codebase}"/>
     </bean>
 
     <bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
