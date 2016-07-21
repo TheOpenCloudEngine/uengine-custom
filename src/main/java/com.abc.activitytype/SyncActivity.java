@@ -5,6 +5,7 @@ import org.metaworks.annotation.Group;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.Range;
 import org.uengine.codi.mw3.admin.WebEditorFace;
+import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.ReceiveActivity;
@@ -13,11 +14,11 @@ import org.uengine.kernel.bpmn.face.ProcessVariableSelectorFace;
 /**
  * Created by jjy on 2016. 7. 18..
  */
-public class AnalysisActivity extends ReceiveActivity{
+public class SyncActivity extends DefaultActivity{
 
-    public AnalysisActivity() {
+    public SyncActivity() {
         super();
-        setName("Analysis");
+        setName("Synchronous Activity");
     }
 
     String parameter1;

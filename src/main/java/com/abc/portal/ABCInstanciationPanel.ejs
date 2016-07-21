@@ -1,0 +1,30 @@
+<div style="padding: 15px">
+    <h2><%=value.practiceName%></h2>
+    <p>
+        <%=value.practiceBriefDescription%>
+    </p>
+
+<%if (value.practiceDescription){%>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <%=value.practiceDescription%>
+        </div>
+    </div>
+<%}%>
+
+
+    <h3>
+        <%=mw3.localize("$VariableSetting")%>
+    </h3>
+    <div style="height: 80px">
+        <%=fields.variableSettings.here()%>
+    </div>
+
+    <h3>
+        <%=mw3.localize("$RoleMapping")%>
+    </h3>
+    <div style="height: 80px">
+        <%=fields.roleMappingDefinitions.here()%>
+    </div>
+
+</div>
