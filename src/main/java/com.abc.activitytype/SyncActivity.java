@@ -107,6 +107,11 @@ public class SyncActivity extends DefaultActivity{
                         System.out.println(log);
                         instance.addDebugInfo(log);
                         MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(log))});
+
+                        //set result value to variable
+                        if(getVariableToStoreResult()!=null)
+                            getVariableToStoreResult().set(instance, "", log);
+
                     }
 
                     SyncActivity.this.fireComplete(instance);
@@ -115,5 +120,6 @@ public class SyncActivity extends DefaultActivity{
                 }
             }
         }.start();
+
     }
 }
