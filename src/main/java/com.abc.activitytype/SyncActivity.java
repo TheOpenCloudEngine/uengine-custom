@@ -93,7 +93,11 @@ public class SyncActivity extends DefaultActivity{
 
         //logic here
         System.out.println(getParameter1());
+        final String log = "log from " + getClass().getName() + " :   evaluation for parameter2 is " + evaluateContent(instance, getParameter2());
 
+        //set result value to variable
+        if(getVariableToStoreResult()!=null)
+            getVariableToStoreResult().set(instance, "", log);
 
 
         new Thread(){
@@ -103,14 +107,10 @@ public class SyncActivity extends DefaultActivity{
                 try {
                     for(int i=0; i<getIntParameter(); i++){
                         Thread.sleep(3000);
-                        String log = "log from " + getClass().getName() + " :   evaluation for parameter2 is " + evaluateContent(instance, getParameter2());
                         System.out.println(log);
                         instance.addDebugInfo(log);
                         MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(log))});
 
-                        //set result value to variable
-                        if(getVariableToStoreResult()!=null)
-                            getVariableToStoreResult().set(instance, "", log);
 
                     }
 
