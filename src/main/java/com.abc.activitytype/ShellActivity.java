@@ -14,6 +14,7 @@ import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by jjy on 2016. 7. 25..
@@ -162,44 +163,84 @@ public class ShellActivity extends DefaultActivity{
       //      if (isDebugMode) System.out.println("command : " + command);
             channelExec.setCommand(commandLine);
 
-            InputStream inputStream = channelExec.getInputStream();
+            final InputStream inputStream = channelExec.getInputStream();
             //InputStream ext = channelExec.getExtInputStream();
-            InputStream err = channelExec.getErrStream();
+            final InputStream err = channelExec.getErrStream();
             channelExec.connect(3000);
 
-            StringBuffer output = new StringBuffer();
-            byte[] buf = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buf)) != -1) {
-                String str = new String(buf, 0, length);
-                output.append(str);
+            final ArrayList count = new ArrayList();
 
-                String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                existingLog += output.toString();
+            new Thread(){
+                @Override
+                public void run() {
 
-                instance.setProperty(getTracingTag(), "log", existingLog);
-
-                MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
+                    StringBuffer output = new StringBuffer();
+                    byte[] buf = new byte[1024];
+                    int length;
 
 
-                System.out.println(str);
+                    try {
+                        while ((length = inputStream.read(buf)) != -1) {
+                            String str = new String(buf, 0, length);
+                            output.append(str);
 
-            }
+                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
+                            existingLog += output.toString();
 
-            while ((length = err.read(buf)) != -1) {
-                String str = new String(buf, 0, length);
-                output.append(str);
+                            instance.setProperty(getTracingTag(), "log", existingLog);
 
-                String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                existingLog += output.toString();
-
-                instance.setProperty(getTracingTag(), "log", existingLog);
-
-                MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
+                           // MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
 
 
-                System.out.println(str);
+                            System.out.println(str);
 
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    count.add("");
+                }
+            }.start();
+
+
+            new Thread() {
+                @Override
+                public void run() {
+
+
+                    StringBuffer output = new StringBuffer();
+                    byte[] buf = new byte[1024];
+                    int length;
+
+
+                    try {
+                        while ((length = err.read(buf)) != -1) {
+                            String str = new String(buf, 0, length);
+                            output.append(str);
+
+                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
+                            existingLog += output.toString();
+
+                            instance.setProperty(getTracingTag(), "log", existingLog);
+
+                           // MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
+
+
+                            System.out.println(str);
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    count.add("");
+                }
+            }.start();
+
+            for(;;){
+                Thread.sleep(1000);
+                if(count.size() == 2) break;
             }
 
             channelExec.disconnect();
