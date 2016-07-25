@@ -2,6 +2,7 @@ package com.abc.modeler;
 
 import com.abc.activitytype.AnalysisActivity;
 import com.abc.activitytype.view.AnalysisActivityView;
+import com.abc.activitytype.view.ShellActivityView;
 import com.abc.activitytype.view.SyncActivityView;
 import org.uengine.kernel.bpmn.view.PoolView;
 import org.uengine.kernel.bpmn.view.SubProcessView;
@@ -22,6 +23,7 @@ public class AnalysisPalette extends PaletteWindow {
 
         addSymbol((new AnalysisActivityView()).createSymbol());
         addSymbol((new SyncActivityView()).createSymbol());
+        addSymbol((new ShellActivityView()).createSymbol());
     }
 
     public AnalysisPalette(String type) {
