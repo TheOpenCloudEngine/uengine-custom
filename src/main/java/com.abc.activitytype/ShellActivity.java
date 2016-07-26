@@ -8,6 +8,7 @@ import com.jcraft.jsch.UserInfo;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
+import org.metaworks.annotation.Order;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.widget.SourceCodeFace;
 import org.uengine.kernel.DefaultActivity;
@@ -62,6 +63,7 @@ public class ShellActivity extends DefaultActivity{
 
     String host;
     @Group(name="Host")
+    @Order(1)
         public String getHost() {
             return host;
         }
@@ -72,6 +74,7 @@ public class ShellActivity extends DefaultActivity{
 
     String port = "22";
     @Group(name="Host")
+    @Order(2)
         public String getPort() {
             return port;
         }
