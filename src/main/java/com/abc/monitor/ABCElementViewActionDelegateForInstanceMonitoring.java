@@ -1,8 +1,10 @@
 package com.abc.monitor;
 
+import com.abc.activitytype.CustomSQLActivity;
 import com.abc.activitytype.ShellActivity;
 import com.abc.activitytype.SyncActivity;
 import com.abc.activitytype.view.AnalysisActivityView;
+import com.abc.activitytype.view.CustomSQLActivityView;
 import com.abc.activitytype.view.ShellActivityView;
 import com.abc.activitytype.view.SyncActivityView;
 import com.abc.portal.ABCInstanceView;
@@ -52,7 +54,7 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
             }
 
 
-        }else if(elementView instanceof ShellActivityView){
+        } else if(elementView instanceof ShellActivityView) {
 
             try {
 
@@ -61,7 +63,26 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
 
                 ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
                 String log = (String) instance.getProperty(shellActivity.getTracingTag(), "log"); //for current log
-                MetaworksRemoteService.wrapReturn(new ModalWindow(new Console(log)));
+                MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(log), getInstanceId(), shellActivity.getTracingTag() )));
+
+
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //super.onDoubleClick(elementView);
+        } else if(elementView instanceof CustomSQLActivityView) {
+
+            try {
+
+                ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
+                CustomSQLActivity customSQLActivity = (CustomSQLActivity) elementView.getElement();
+
+                ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
+                String log = (String) instance.getProperty(customSQLActivity.getTracingTag(), "resultSql"); //for current log
+                MetaworksRemoteService.wrapReturn(new ModalWindow(new CustomSQLDetailView(new Console(log), getInstanceId(), customSQLActivity.getTracingTag())));
 
 
             } catch (RemoteException e) {

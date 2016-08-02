@@ -41,69 +41,74 @@ public class ShellActivity extends DefaultActivity{
             values = {"7", "130"}
     )
 //    @Face(faceClass= SourceCodeFace.class)
-        public String getCommand() {
-            return command;
-        }
-        public void setCommand(String command) {
-            this.command = command;
-        }
+    public String getCommand() {
+        return command;
+    }
+    public void setCommand(String command) {
+        this.command = command;
+    }
 
     String userId;
     @Group(name="Credentials")
-        public String getUserId() {
-            return userId;
-        }
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     String password;
     @Group(name="Credentials")
-        public String getPassword() {
-            return password;
-        }
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    String killScript;
+    public String getKillScript() { return killScript; }
+    public void setKillScript(String killScript) { this.killScript = killScript; }
 
     String host;
     @Group(name="Host")
     @Order(1)
-        public String getHost() {
-            return host;
-        }
+    public String getHost() {
+        return host;
+    }
 
-        public void setHost(String host) {
-            this.host = host;
-        }
+    public void setHost(String host) {
+        this.host = host;
+    }
 
     String port = "22";
     @Group(name="Host")
     @Order(2)
-        public String getPort() {
-            return port;
-        }
-        public void setPort(String port) {
-            this.port = port;
-        }
+    public String getPort() {
+        return port;
+    }
+    public void setPort(String port) {
+        this.port = port;
+    }
 
     String identityPemFilePath;
     @Group(name="PEM_File")
-        public String getIdentityPemFilePath() {
-            return identityPemFilePath;
-        }
-        public void setIdentityPemFilePath(String identityPemFilePath) {
-            this.identityPemFilePath = identityPemFilePath;
-        }
+    public String getIdentityPemFilePath() {
+        return identityPemFilePath;
+    }
+    public void setIdentityPemFilePath(String identityPemFilePath) {
+        this.identityPemFilePath = identityPemFilePath;
+    }
 
     boolean strictHostKeyChecking;
     @Group(name="Advanced")
-        public boolean isStrictHostKeyChecking() {
-            return strictHostKeyChecking;
-        }
-        public void setStrictHostKeyChecking(boolean strictHostKeyChecking) {
-            this.strictHostKeyChecking = strictHostKeyChecking;
-        }
+    public boolean isStrictHostKeyChecking() {
+        return strictHostKeyChecking;
+    }
+    public void setStrictHostKeyChecking(boolean strictHostKeyChecking) {
+        this.strictHostKeyChecking = strictHostKeyChecking;
+    }
 
 
     String killCommand;
@@ -175,9 +180,17 @@ public class ShellActivity extends DefaultActivity{
         String[] commandLines = evaluateContent(instance, getCommand()).toString().split("\n");
 
         for(String commandLine : commandLines){
+
+            //final Boolean stopSignaled =
+            //        (Boolean) instance.getProperty(getTracingTag(), "stopSignaled");
+
+            //if(stopSignaled) {
+            //    commandLine = getKillScript();
+            // }
+
             ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
             channelExec.setPty(false);
-      //      if (isDebugMode) System.out.println("command : " + command);
+            //      if (isDebugMode) System.out.println("command : " + command);
             channelExec.setCommand(commandLine);
 
             final InputStream inputStream = channelExec.getInputStream();
@@ -217,7 +230,10 @@ public class ShellActivity extends DefaultActivity{
                     }
 
                     count.add("");
+
+
                 }
+
             }.start();
 
 
@@ -245,7 +261,6 @@ public class ShellActivity extends DefaultActivity{
                             console.setColor("#f1c40f");
                             MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), console)});
 
-
                             System.out.println(str);
 
                         }
@@ -263,6 +278,9 @@ public class ShellActivity extends DefaultActivity{
             }
 
             channelExec.disconnect();
+
+            //if(stopSignaled)
+            //    break;
         }
 
         session.disconnect();
