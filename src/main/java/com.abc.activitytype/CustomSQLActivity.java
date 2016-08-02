@@ -1,18 +1,12 @@
 package com.abc.activitytype;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
 import net.sf.json.JSONObject;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.Range;
 import org.metaworks.dao.ConnectionFactory;
-import org.uengine.kernel.DefaultActivity;
-import org.uengine.kernel.ProcessInstance;
-import org.uengine.kernel.UEngineException;
-import org.uengine.kernel.ValidationContext;
+import org.uengine.kernel.*;
 import org.uengine.util.dao.DataSourceConnectionFactory;
 
 import java.sql.*;
@@ -66,22 +60,33 @@ public class CustomSQLActivity extends DefaultActivity {
         ResultSet resultSet = null;
 
         try {
-
-            // MayBe From optionDataSource(), change Connection Default, Hive, Spark
             boolean uEngineShouldManageTheTransaction = !instance.getProcessTransactionContext().getProcessManager().isManagedTransaction() && this.getConnectionFactory() instanceof DataSourceConnectionFactory;
 
-            if(this.getConnectionFactory() == null) {
-                con = instance.getProcessTransactionContext().getConnection();
-            } else if(uEngineShouldManageTheTransaction) {
-                con = instance.getProcessTransactionContext().createManagedExternalConnection((DataSourceConnectionFactory)this.getConnectionFactory());
-            } else {
+            if("DEFAULT".equals(getOptionDataSource())) {
+                if (this.getConnectionFactory() == null) {
+                    con = instance.getProcessTransactionContext().getConnection();
+                } else if (uEngineShouldManageTheTransaction) {
+                    con = instance.getProcessTransactionContext().createManagedExternalConnection((DataSourceConnectionFactory) this.getConnectionFactory());
+                } else {
+                    try {
+                        con = this.getConnectionFactory().getConnection();
+                    } catch (Exception exception) {
+                        throw new UEngineException("[SQLActivity]Error when to get connection from connection factory: " + exception.getMessage(), exception);
+                    }
+                }
+            } else if("HIVE".equals(getOptionDataSource())) {
                 try {
-                    con = this.getConnectionFactory().getConnection();
+                    con = this.getCreateConnection(getOptionDataSource());
+                } catch (Exception exception) {
+                    throw new UEngineException("[SQLActivity]Error when to get connection from connection factory: " + exception.getMessage(), exception);
+                }
+            } else if("SPARK".equals(getOptionDataSource())) {
+                try {
+                    con = this.getCreateConnection(getOptionDataSource());
                 } catch (Exception exception) {
                     throw new UEngineException("[SQLActivity]Error when to get connection from connection factory: " + exception.getMessage(), exception);
                 }
             }
-
             String actualSql = this.evaluateContent(instance, this.getSqlStmt()).toString().trim();
 
             pstmt = con.prepareStatement(actualSql);
@@ -106,6 +111,37 @@ public class CustomSQLActivity extends DefaultActivity {
             if(pstmt != null) pstmt.close();
             if(resultSet != null) resultSet.close();
         }
+    }
+
+    // it's Sample, so this get connection from Oracle Driver
+    // after Hive, spark Dicide, change business Logic For Hive, Spark
+    protected Connection getCreateConnection(String optionDataSource) {
+
+        String jdbcDriver = "";
+        String conUrl = "";
+        String conId = "";
+        String conPwd = "";
+        if("HIVE".equals(optionDataSource)) {
+            jdbcDriver = GlobalContext.getPropertyString("oracle.jdbc.driverClassName");
+            conUrl = GlobalContext.getPropertyString("oracle.jdbc.url");
+            conId = GlobalContext.getPropertyString("oracle.jdbc.username");
+            conPwd = GlobalContext.getPropertyString("oracle.jdbc.password");
+        } else if("SPARK".equals(optionDataSource)) {
+            jdbcDriver = GlobalContext.getPropertyString("oracle.jdbc.driverClassName");
+            conUrl = GlobalContext.getPropertyString("oracle.jdbc.url");
+            conId = GlobalContext.getPropertyString("oracle.jdbc.username");
+            conPwd = GlobalContext.getPropertyString("oracle.jdbc.password");
+        }
+
+        Connection con = null;
+        try {
+            Class.forName(jdbcDriver);
+            con = DriverManager.getConnection(conUrl, conId, conPwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return con;
     }
 
     protected void getResult(ResultSet resultSet, ProcessInstance instance) throws Exception {
