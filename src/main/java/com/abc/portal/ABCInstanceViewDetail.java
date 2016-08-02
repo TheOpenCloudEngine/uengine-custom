@@ -1,5 +1,6 @@
 package com.abc.portal;
 
+import com.abc.monitor.ConsolePanel;
 import org.uengine.codi.mw3.model.InstanceViewDetail;
 import org.uengine.social.InstanceMonitorPanel;
 
@@ -8,13 +9,27 @@ import org.uengine.social.InstanceMonitorPanel;
  */
 public class ABCInstanceViewDetail extends InstanceViewDetail {
 
-    public InstanceMonitorPanel getInstanceMonitorPanel() {
-        return instanceMonitorPanel;
+    public ABCInstanceViewDetail(){
+        setConsolePanel(new ConsolePanel());
     }
 
-    public void setInstanceMonitorPanel(InstanceMonitorPanel instanceMonitorPanel) {
-        this.instanceMonitorPanel = instanceMonitorPanel;
-    }
+    ConsolePanel consolePanel;
+        public ConsolePanel getConsolePanel() {
+            return consolePanel;
+        }
+
+        public void setConsolePanel(ConsolePanel consolePanel) {
+            this.consolePanel = consolePanel;
+        }
+
 
     InstanceMonitorPanel instanceMonitorPanel;
+        public InstanceMonitorPanel getInstanceMonitorPanel() {
+            return instanceMonitorPanel;
+        }
+
+        public void setInstanceMonitorPanel(InstanceMonitorPanel instanceMonitorPanel) {
+            this.instanceMonitorPanel = instanceMonitorPanel;
+        }
+
 }

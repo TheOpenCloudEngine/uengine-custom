@@ -1,6 +1,7 @@
 package com.abc.activitytype;
 
 import com.abc.monitor.Console;
+import com.abc.monitor.ConsolePanel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -25,7 +26,11 @@ public class ShellActivity extends DefaultActivity{
     public ShellActivity() {
         super("Shell");
         setCommand("");
-        setQueuingEnabled(true);
+    }
+
+    @Override
+    public boolean isQueuingEnabled() {
+        return true;
     }
 
     String command;
@@ -100,6 +105,15 @@ public class ShellActivity extends DefaultActivity{
             this.strictHostKeyChecking = strictHostKeyChecking;
         }
 
+
+    String killCommand;
+        public String getKillCommand() {
+            return killCommand;
+        }
+
+        public void setKillCommand(String killCommand) {
+            this.killCommand = killCommand;
+        }
 
 
 
@@ -192,7 +206,7 @@ public class ShellActivity extends DefaultActivity{
 
                             instance.setProperty(getTracingTag(), "log", existingLog);
 
-                           // MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
+                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
 
 
                             System.out.println(str);
@@ -227,7 +241,9 @@ public class ShellActivity extends DefaultActivity{
 
                             instance.setProperty(getTracingTag(), "log", existingLog);
 
-                           // MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new Console(), new Console(str))});
+                            Console console = new Console(str);
+                            console.setColor("#f1c40f");
+                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), console)});
 
 
                             System.out.println(str);

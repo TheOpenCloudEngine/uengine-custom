@@ -1,5 +1,6 @@
 package com.abc.portal;
 
+import com.abc.monitor.ConsolePanel;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.ServiceMethod;
