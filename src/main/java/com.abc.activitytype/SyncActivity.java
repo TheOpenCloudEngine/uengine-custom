@@ -8,7 +8,10 @@ import org.metaworks.annotation.Order;
 import org.metaworks.annotation.Range;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.admin.WebEditorFace;
-import org.uengine.kernel.*;
+import org.uengine.kernel.DefaultActivity;
+import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariable;
+import org.uengine.kernel.ValidationContext;
 import org.uengine.kernel.bpmn.face.ProcessVariableSelectorFace;
 
 import java.util.Map;

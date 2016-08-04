@@ -11,7 +11,6 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
 import org.metaworks.annotation.Order;
 import org.metaworks.dwr.MetaworksRemoteService;
-import org.uengine.codi.mw3.widget.SourceCodeFace;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 
@@ -125,7 +124,7 @@ public class ShellActivity extends DefaultActivity{
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
-
+        instance.set("aa","[bb]");
         JSch jsch = new JSch();
 
         if(getIdentityPemFilePath()!=null && getIdentityPemFilePath().trim().length() > 0) {
@@ -289,7 +288,4 @@ public class ShellActivity extends DefaultActivity{
 
 
     }
-
-
-
 }
