@@ -1,8 +1,10 @@
 package com.abc.activitytype;
 
+import com.abc.face.ParameterValueListFace;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONObject;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.Range;
 import org.metaworks.dao.ConnectionFactory;
@@ -25,11 +27,31 @@ import java.util.Map;
 public class CustomSQLActivity extends DefaultActivity {
 
     ConnectionFactory connectionFactory;
-    public ConnectionFactory getConnectionFactory() { return this.connectionFactory; }
-    public void setConnectionFactory(ConnectionFactory factory) { this.connectionFactory = factory; }
+        @Hidden
+        public ConnectionFactory getConnectionFactory() { return this.connectionFactory; }
+        public void setConnectionFactory(ConnectionFactory factory) { this.connectionFactory = factory; }
 
-    @Order(2)
+
+
+
+    List<String> parameterValueList = new ArrayList();
+        @Face(
+                faceClass = ParameterValueListFace.class,
+                displayName = "파라미터 값 리스트"
+        )
+        @Order(2)
+        public List<String> getParameterValueList() { return parameterValueList; }
+        public void setParameterValueList(List<String> parameterValueList) { this.parameterValueList = parameterValueList; }
+
+    /*
+    ParameterValuePanel parameterValuePanel;
+        @Order(2)
+        public ParameterValuePanel getParameterValuePanel() { return parameterValuePanel; }
+        public void setParameterValuePanel(ParameterValuePanel parameterValuePanel) { this.parameterValuePanel = parameterValuePanel; }
+    */
+
     String sqlStmt;
+        @Order(3)
         public String getSqlStmt() { return this.sqlStmt; }
         public void setSqlStmt(String value) { this.sqlStmt = value; }
 
@@ -37,23 +59,35 @@ public class CustomSQLActivity extends DefaultActivity {
      * TODO Option
      */
     String optionDataSource;
-    @Face(
-            displayName = "접속 정보"
-    )
-    @Range(options={"Default", "Hive", "Spark"}, values={"DEFAULT", "HIVE", "SPARK"})
-    @Order(3)
-    public String getOptionDataSource() {
-        return optionDataSource;
-    }
-    public void setOptionDataSource(String optionDataSource) {
+        @Face(
+                displayName = "접속 정보"
+        )
+        @Range(options={"Default", "Hive", "Spark"}, values={"DEFAULT", "HIVE", "SPARK"})
+        @Order(4)
+        public String getOptionDataSource() {
+            return optionDataSource;
+        }
+        public void setOptionDataSource(String optionDataSource) {
         this.optionDataSource = optionDataSource;
     }
 
     public CustomSQLActivity() {
+
         super("Custom SQL");
+        //this.setParameterValuePanel(new ParameterValuePanel());
     }
 
     public void executeActivity(ProcessInstance instance) throws Exception {
+
+
+        /**
+         * this is sample code, simply trace list value;
+         */
+        List<String> getParameterValueList = getParameterValueList();
+        for(String value : getParameterValueList) {
+            System.out.println("============== setting value =======================");
+            System.out.println(value);
+        }
 
         Connection con = null;
         PreparedStatement pstmt = null;
