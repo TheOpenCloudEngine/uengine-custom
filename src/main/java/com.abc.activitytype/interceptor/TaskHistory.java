@@ -17,6 +17,8 @@ public class TaskHistory implements Serializable{
     private String status;
     private String stdout;
     private String stderr;
+    private String script;
+    private String sshCommand;
 
     public String getProcessId() {
         return processId;
@@ -120,5 +122,21 @@ public class TaskHistory implements Serializable{
 
     public void setStderr(String stderr) {
         this.stderr = stderr;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
+    }
+
+    public String getSshCommand() {
+        return sshCommand;
+    }
+
+    public void setSshCommand(String sshCommand) {
+        this.sshCommand = sshCommand;
     }
 }

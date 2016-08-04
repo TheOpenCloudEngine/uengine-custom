@@ -1,35 +1,18 @@
 package com.abc.activitytype;
 
-//import com.abc.activitytype.interceptor.GlobalAttributes;
-
 import com.abc.activitytype.interceptor.InterceptorScriptBaseTask;
-import com.abc.activitytype.interceptor.RemoteManager;
-import com.abc.activitytype.interceptor.TaskAttributes;
 import com.abc.monitor.Console;
 import com.abc.monitor.ConsolePanel;
 import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
+import org.apache.commons.io.IOUtils;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
-import org.metaworks.annotation.Order;
-import org.metaworks.annotation.Range;
 import org.metaworks.dwr.MetaworksRemoteService;
-import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
-import org.springframework.util.StringUtils;
-import org.uengine.codi.mw3.admin.WebEditorFace;
 import org.uengine.kernel.*;
-import org.uengine.kernel.bpmn.face.ProcessVariableSelectorFace;
-import org.uengine.web.util.ApplicationContextRegistry;
 
-import java.io.File;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -65,58 +48,76 @@ public class HiveActivity extends InterceptorScriptBaseTask {
     }
 
     @Override
-    public void runTask(ProcessInstance instance) throws Exception {
+    public void runTask() throws Exception {
         Properties properties = GlobalContext.getProperties();
+
+        //하이브 홈, 하이브 유저
         String hiveHome = properties.getProperty("hadoop.hive.home");
         String hiveuser = properties.getProperty("hadoop.hive.user");
 
-        String scriptTemp = tempDir + "/" + new Date().getTime();
-        String sqlFilePath = scriptTemp + "/hive.sql";
+        //하이브 쿼리문이 저장될 패스
+        String sqlFilePath = tempDir + "/hive.sql";
 
-        String script = "sudo su - " + hiveuser + " -c \"" + hiveHome + "/bin/hive -f " + sqlFilePath + "\"";
-        String scriptFilePath = scriptTemp + "/hive.sh";
+        /**
+         * 스크립트 파일은 hive 유저 권한으로 실행될 커맨드를 저장한다.
+         * 샘플) sudo su - hive -c "/usr/hdp/2.4.2.0-258/hive/bin/hive -f /tmp/sk/20231230019223/hive.sql"
+         */
+        script = "sudo su - " + hiveuser + " -c \"" + hiveHome + "/bin/hive -f " + sqlFilePath + "\"";
 
-        remoteManager.exec("mkdir -p " + scriptTemp);
+        //스크립트 파일이 저장될 패스
+        String scriptFilePath = tempDir + "/script.sh";
+
+        //원격지에 스크립트 저장 디렉토리를 생성한다.
+        remoteManager.exec("mkdir -p " + tempDir);
+
+        //쿼리문을 원격지에 저장한다.
         remoteManager.copyFileContent(getQuery(), sqlFilePath);
+
+        //실행 스크립트를 원격지에 저장한다.
         remoteManager.copyFileContent(script, scriptFilePath);
 
+        /**
+         * ssh 커맨드는 원격지에 저장된 스크립트 파일을 sudo 권한이 있는 계정으로 실행시키기 위한 명령어이다.
+         * 샘플) sudo /bin/sh /tmp/sk/20231230019223/script.sh
+         */
+        sshCommand = "sudo /bin/sh " + scriptFilePath;
 
-        String command = "sudo /bin/sh " + scriptFilePath;
+        //Jsch 세션의 인풋스트림을 제어해야 함으로 세션을 직접 컨트롤한다.
         Session session = remoteManager.getSession();
         session.connect();
         ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
         channelExec.setPty(true);
-        channelExec.setCommand(command);
+        channelExec.setCommand(sshCommand);
 
+        //stdout 스트림
         final InputStream inputStream = channelExec.getInputStream();
+        //stderr 스트림
         final InputStream err = channelExec.getErrStream();
-        channelExec.connect(3000);
 
-        StringBuffer output = new StringBuffer();
+        //stdout 을 저장한다.
+        channelExec.connect(3000);
         byte[] buf = new byte[1024];
         int length;
-
         try {
             while ((length = inputStream.read(buf)) != -1) {
                 String str = new String(buf, 0, length);
-                output.append(str);
+                stdout += str;
 
-                String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                existingLog += output.toString();
-
-                instance.setProperty(getTracingTag(), "log", existingLog);
-
+                instance.setProperty(getTracingTag(), "log", stdout);
                 MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
                 System.out.println(str);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //stderr 을 저장한다.
+        stderr = IOUtils.toString(err);
 
+        //커넥션 종료
         channelExec.disconnect();
         session.disconnect();
 
         //원격지의 스크립트 폴더 삭제
-        remoteManager.deleteFile(scriptTemp);
+        remoteManager.deleteFile(tempDir);
     }
 }

@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
-public class ScriptBaseAbstractTask extends DefaultActivity {
+public abstract class ScriptBaseAbstractTask extends DefaultActivity {
 
     /**
      * 실행중인 워크플로우 객체
@@ -45,9 +45,25 @@ public class ScriptBaseAbstractTask extends DefaultActivity {
      */
     public TaskHistory taskHistory;
 
+    /**
+     * 스크립트 실행 로그
+     */
     public String stdout;
 
+    /**
+     * 스크립트 에러 로그
+     */
     public String stderr;
+
+    /**
+     * 원격지에서 실행될 스크립트 내용
+     */
+    public String script;
+
+    /**
+     * 원격지에서 실행할 스크립트 실행 커맨드
+     */
+    public String sshCommand;
 
     /**
      * SLF4J Logging
@@ -56,6 +72,8 @@ public class ScriptBaseAbstractTask extends DefaultActivity {
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
+
+        this.instance = instance;
 
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         taskAttributes = context.getBean(TaskAttributes.class);
@@ -75,12 +93,8 @@ public class ScriptBaseAbstractTask extends DefaultActivity {
         } else {
             remoteManager = new RemoteManager(sshHost, Integer.parseInt(sshPort), sshUser, new File(sshPem));
         }
-
-        this.instance = instance;
-
-        this.doExecute(instance);
+        this.doExecute();
     }
 
-    public void doExecute(ProcessInstance instance) throws Exception {
-    };
+    public abstract void doExecute() throws Exception;
 }
