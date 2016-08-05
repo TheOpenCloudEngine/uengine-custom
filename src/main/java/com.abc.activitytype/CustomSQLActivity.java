@@ -1,6 +1,7 @@
 package com.abc.activitytype;
 
 import com.abc.face.ParameterValueListFace;
+import com.abc.face.ParameterVariable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONObject;
 import org.metaworks.annotation.Face;
@@ -34,14 +35,14 @@ public class CustomSQLActivity extends DefaultActivity {
 
 
 
-    List<String> parameterValueList = new ArrayList();
+    List<ParameterVariable> parameterValueList = new ArrayList();
         @Face(
                 faceClass = ParameterValueListFace.class,
                 displayName = "파라미터 값 리스트"
         )
         @Order(2)
-        public List<String> getParameterValueList() { return parameterValueList; }
-        public void setParameterValueList(List<String> parameterValueList) { this.parameterValueList = parameterValueList; }
+        public List<ParameterVariable> getParameterValueList() { return parameterValueList; }
+        public void setParameterValueList(List<ParameterVariable> parameterValueList) { this.parameterValueList = parameterValueList; }
 
     /*
     ParameterValuePanel parameterValuePanel;
@@ -83,10 +84,10 @@ public class CustomSQLActivity extends DefaultActivity {
         /**
          * this is sample code, simply trace list value;
          */
-        List<String> getParameterValueList = getParameterValueList();
-        for(String value : getParameterValueList) {
+        List<ParameterVariable> getParameterValueList = getParameterValueList();
+        for(ParameterVariable pv : getParameterValueList) {
             System.out.println("============== setting value =======================");
-            System.out.println(value);
+            System.out.println(pv.getParameter());
         }
 
         Connection con = null;
