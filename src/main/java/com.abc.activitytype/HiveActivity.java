@@ -6,13 +6,27 @@ import com.abc.monitor.ConsolePanel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.Session;
 import org.apache.commons.io.IOUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.RuntimeSingleton;
+import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.util.StringUtils;
 import org.uengine.kernel.*;
 
+import java.io.File;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -47,8 +61,50 @@ public class HiveActivity extends InterceptorScriptBaseTask {
         this.query = query;
     }
 
+    String props;
+
+    @Group(name = "Properties")
+    @Face(
+            ejsPath = "dwr/metaworks/genericfaces/richText.ejs",
+            options = {"rows", "cols"},
+            values = {"7", "130"}
+    )
+    public String getProps() {
+        return props;
+    }
+
+    public void setProps(String props) {
+        this.props = props;
+    }
+
+
     @Override
     public void runTask() throws Exception {
+        //props 를 쿼리문에 치환한다.
+        Map propsMap = new HashMap();
+        if (!StringUtils.isEmpty(props)) {
+            String[] split = props.split("\n");
+            for (String propertySet : split) {
+                if (propertySet.indexOf("=") != -1) {
+                    String key = propertySet.substring(0, propertySet.indexOf("="));
+                    String value = propertySet.substring(propertySet.indexOf("=") + 1, propertySet.length());
+                    propsMap.put(key, value);
+                }
+            }
+        }
+        DefaultResourceLoader loader = new DefaultResourceLoader();
+        Resource resource = loader.getResource("classpath:/");
+        String templateName = UUID.randomUUID().toString() + ".txt";
+        String templatePath = resource.getFile().getAbsolutePath() + "/" + templateName;
+
+        byte data[] = getQuery().getBytes();
+        File file = new File(templatePath);
+        file.createNewFile();
+        Path path = Paths.get(file.getPath());
+        Files.write(path, data);
+        setQuery(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "UTF-8", propsMap));
+
+
         Properties properties = GlobalContext.getProperties();
 
         //하이브 홈, 하이브 유저

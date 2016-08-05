@@ -1,5 +1,6 @@
 package com.abc.activitytype.interceptor;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -66,6 +67,11 @@ public abstract class ScriptBaseAbstractTask extends DefaultActivity {
     public String sshCommand;
 
     /**
+     * 템플릿에서 변수값을 치환하는 용도의 엔진
+     */
+    public VelocityEngine velocityEngine;
+
+    /**
      * SLF4J Logging
      */
     private Logger logger = LoggerFactory.getLogger(ScriptBaseAbstractTask.class);
@@ -77,6 +83,7 @@ public abstract class ScriptBaseAbstractTask extends DefaultActivity {
 
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         taskAttributes = context.getBean(TaskAttributes.class);
+        velocityEngine = context.getBean(VelocityEngine.class);
         properties = GlobalContext.getProperties();
 
         String temp = properties.getProperty("hadoop.temp.dir");
