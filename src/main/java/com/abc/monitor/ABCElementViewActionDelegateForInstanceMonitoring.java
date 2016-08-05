@@ -45,7 +45,7 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
                 ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
 
                 ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
-                MetaworksRemoteService.wrapReturn(new ModalWindow(new Console()));
+                MetaworksRemoteService.wrapReturn(new ModalWindow(new Console("testtesttest")));
 
                 SyncActivity syncActivity = (SyncActivity) elementView.getElement();
 

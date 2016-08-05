@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.uengine:uengine-social-bpm-portal:war:4.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/uengine-social-bpm-portal/4.0.1-SNAPSHOT/uengine-social-bpm-portal-4.0.1-SNAPSHOT.war!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/uengine-social-bpm-portal/4.0.1-SNAPSHOT/uengine-social-bpm-portal-4.0.1-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/uengine-social-bpm-portal/4.0.1-SNAPSHOT/uengine-social-bpm-portal-4.0.1-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
