@@ -1,0 +1,18 @@
+<%if(value){
+if(value.value.__className != 'com.abc.face.ParameterVariable') {
+%>
+
+<div class="panel <%=value.selected ? "panel-primary" : "panel-default"%>">
+    <div class="panel-heading" onclick="<%=methods.select.caller()%>"><%=value.value.__className%></div>
+    <div class="panel-body"><%=fields.value.here()%></div>
+</div>
+
+<%  } else {
+
+%>
+<div class="panel <%=value.selected ? "panel-primary" : "panel-default"%>" style="margin-bottom: 3px;>
+    <div class="panel-body" ondblclick="<%=methods.select.caller()%>"><%=fields.value.here()%></div>
+</div>
+
+
+<% } }%>
