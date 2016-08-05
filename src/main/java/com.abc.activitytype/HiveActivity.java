@@ -103,7 +103,7 @@ public class HiveActivity extends InterceptorScriptBaseTask {
         Path path = Paths.get(file.getPath());
         Files.write(path, data);
         setQuery(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "UTF-8", propsMap));
-
+        file.delete();
 
         Properties properties = GlobalContext.getProperties();
 
