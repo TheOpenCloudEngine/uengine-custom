@@ -6,10 +6,6 @@ import com.abc.monitor.ConsolePanel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.Session;
 import org.apache.commons.io.IOUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.RuntimeSingleton;
-import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
@@ -22,8 +18,6 @@ import org.uengine.kernel.*;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -105,6 +99,8 @@ public class HiveActivity extends InterceptorScriptBaseTask {
         setQuery(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "UTF-8", propsMap));
         file.delete();
 
+
+        //uengine.properties 에서 값 가져오기.
         Properties properties = GlobalContext.getProperties();
 
         //하이브 홈, 하이브 유저

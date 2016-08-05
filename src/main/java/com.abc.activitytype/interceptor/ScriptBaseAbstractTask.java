@@ -81,6 +81,7 @@ public abstract class ScriptBaseAbstractTask extends DefaultActivity {
 
         this.instance = instance;
 
+        //스프링 빈 인티그레이션 하기
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         taskAttributes = context.getBean(TaskAttributes.class);
         velocityEngine = context.getBean(VelocityEngine.class);
