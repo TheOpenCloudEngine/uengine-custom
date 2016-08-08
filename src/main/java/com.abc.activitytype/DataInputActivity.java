@@ -101,7 +101,13 @@ public class DataInputActivity extends DefaultActivity {
     protected void executeActivity(final ProcessInstance instance) throws Exception {
         System.out.println("inputTable Value is " + getInputTable());
         System.out.println("outputTable Value is " + getOutputTable());
-        System.out.println("outputColumn Value is " + getOutputColumn());
+        System.out.println("================= outputColumn Values===============");
+        int outputColumnIdx = 1;
+        for(String outputColumn : getOutputColumn()) {
+            System.out.println(outputColumnIdx+"번째 [outputColumn Value] : " + outputColumn);
+            outputColumnIdx++;
+        }
+        System.out.println("================= FilterInformation End ===============");
         System.out.println("================= FilterInformation Values===============");
         int filterIdx = 1;
         for(FilterInformation filter : getFilterInformation()) {
