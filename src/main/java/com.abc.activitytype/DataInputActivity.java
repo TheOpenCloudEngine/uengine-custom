@@ -2,6 +2,7 @@ package com.abc.activitytype;
 
 import com.abc.activitytype.view.FilterInformationListFace;
 import com.abc.activitytype.view.OutputColumnSelectorFace;
+import com.abc.activitytype.view.SomeValueRadioFace;
 import com.abc.activitytype.view.TableSelector;
 import com.abc.face.ParameterValueListFace;
 import com.abc.face.ParameterVariable;
@@ -77,6 +78,24 @@ public class DataInputActivity extends DefaultActivity {
         public List<ParameterVariable> getParameterValueList() { return parameterValueList; }
         public void setParameterValueList(List<ParameterVariable> parameterValueList) { this.parameterValueList = parameterValueList; }
 
+    boolean checkBox;
+        @Face(
+                displayName = "체크박스"
+        )
+        @Order(7)
+        public boolean isCheckBox() { return checkBox; }
+        public void setCheckBox(boolean checkBox) { this.checkBox = checkBox; }
+
+    String radioValue;
+        @Face(
+                ejsPath = "dwr/metaworks/genericfaces/RadioButton.ejs",
+                options = {"test1", "test2"},
+                values = {"test1", "test2"}
+        )
+        @Order(8)
+        public String getRadioValue() { return radioValue; }
+        public void setRadioValue(String radioValue) { this.radioValue = radioValue; }
+
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
         System.out.println("inputTable Value is " + getInputTable());
@@ -95,6 +114,9 @@ public class DataInputActivity extends DefaultActivity {
             filterIdx++;
         }
         System.out.println("================= ParameterVariable Values===============");
+
+        System.out.println("CheckBox is " + isCheckBox());
+        System.out.println("radioValue is " + getRadioValue());
     }
 
 }
