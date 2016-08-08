@@ -25,6 +25,7 @@ public class AnalysisPalette extends PaletteWindow {
         addSymbol((new HadoopActivityView()).createSymbol());
         addSymbol((new CustomSQLActivityView()).createSymbol());
         addSymbol((new HiveActivityView()).createSymbol());
+        addSymbol((new DataInputActivityView()).createSymbol());
     }
 
     public AnalysisPalette(String type) {
