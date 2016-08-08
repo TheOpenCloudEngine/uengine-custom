@@ -50,16 +50,16 @@ public class DataInputActivity extends DefaultActivity {
         public List<FilterInformation> getFilterInformation() { return filterInformation; }
         public void setFilterInformation(List<FilterInformation> filterInformation) { this.filterInformation = filterInformation; }
 
-
-   /* List<String> outputColumn;
+    List<String> outputColumn;
         @Face(
                 faceClass = OutputColumnSelectorFace.class,
                 displayName = "아웃풋 컬럼 셀렉트박스"
         )
         @Order(5)
         public List<String> getOutputColumn() { return outputColumn; }
-        public void setOutputColumn(List<String> outputColumn) { this.outputColumn = outputColumn; }*/
+        public void setOutputColumn(List<String> outputColumn) { this.outputColumn = outputColumn; }
 
+    /*
     String outputColumn;
         @Face(
                 faceClass = OutputColumnSelectorFace.class,
@@ -68,7 +68,7 @@ public class DataInputActivity extends DefaultActivity {
         @Order(5)
         public String getOutputColumn() { return outputColumn; }
         public void setOutputColumn(String outputColumn) { this.outputColumn = outputColumn; }
-
+*/
     List<ParameterVariable> parameterValueList;
         @Face(
                 faceClass = ParameterValueListFace.class,
@@ -90,7 +90,8 @@ public class DataInputActivity extends DefaultActivity {
         @Face(
                 ejsPath = "dwr/metaworks/genericfaces/RadioButton.ejs",
                 options = {"test1", "test2"},
-                values = {"test1", "test2"}
+                values = {"test1", "test2"},
+                displayName = "라디오버튼"
         )
         @Order(8)
         public String getRadioValue() { return radioValue; }
@@ -100,6 +101,7 @@ public class DataInputActivity extends DefaultActivity {
     protected void executeActivity(final ProcessInstance instance) throws Exception {
         System.out.println("inputTable Value is " + getInputTable());
         System.out.println("outputTable Value is " + getOutputTable());
+        System.out.println("outputColumn Value is " + getOutputColumn());
         System.out.println("================= FilterInformation Values===============");
         int filterIdx = 1;
         for(FilterInformation filter : getFilterInformation()) {

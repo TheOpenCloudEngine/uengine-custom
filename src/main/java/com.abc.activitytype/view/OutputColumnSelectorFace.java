@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by jjy on 2016-08-08.
  */
-public class OutputColumnSelectorFace extends MultiSelectBox implements Face<String> {
+public class OutputColumnSelectorFace extends MultiSelectBox implements Face<List<String>> {
 
     /**
      * 셀렉트박스에서 여러개를 생성하기 위해서는 다음과 같이 setMultiple()에 true로 세팅한다.
@@ -36,14 +36,34 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Str
     }
 
     @Override
-    public void setValueToFace(String value) {
-        setSelected(value);
+    public void setValueToFace(List<String> value) {
+        if(value!=null && value.size() > 0){
+
+            String valueStr = "";
+            String sep = "";
+
+            for(String valueItem : value){
+                valueStr += sep + valueItem;
+                sep = ", ";
+            }
+
+            setSelected(valueStr);
+
+        }
+
     }
 
     @Override
-    public String createValueFromFace() {
+    public List<String> createValueFromFace() {
         if(getSelected()==null) return null;
 
-        return getSelected();
+        String[] values = getSelected().split(", ");
+
+        List<String> valuesInList = new ArrayList<String>();
+        for(String value :  values){
+            valuesInList.add(value);
+        }
+
+        return valuesInList;
     }
 }
