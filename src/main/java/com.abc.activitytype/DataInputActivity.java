@@ -2,17 +2,18 @@ package com.abc.activitytype;
 
 import com.abc.activitytype.view.FilterInformationListFace;
 import com.abc.activitytype.view.OutputColumnSelectorFace;
-import com.abc.activitytype.view.SomeValueRadioFace;
 import com.abc.activitytype.view.TableSelector;
+import com.abc.face.DynamicSelectBoxFace;
 import com.abc.face.ParameterValueListFace;
 import com.abc.face.ParameterVariable;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Order;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ValidationContext;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jjy on 2016-08-08.
@@ -20,6 +21,7 @@ import java.util.List;
 public class DataInputActivity extends DefaultActivity {
 
     public DataInputActivity() {
+        super();
         setName("Data Input");
     }
 
@@ -96,6 +98,49 @@ public class DataInputActivity extends DefaultActivity {
         @Order(8)
         public String getRadioValue() { return radioValue; }
         public void setRadioValue(String radioValue) { this.radioValue = radioValue; }
+
+    Map<String, List<String>> dynamicSelectBox;
+        @Face(
+                displayName = "다이나믹 셀렉트",
+                faceClass = DynamicSelectBoxFace.class
+        )
+        @Order(9)
+        public Map<String, List<String>> getDynamicSelectBox() { return dynamicSelectBox; }
+        public void setDynamicSelectBox(Map<String, List<String>> dynamicSelectBox) { this.dynamicSelectBox = dynamicSelectBox; }
+
+
+    String inputValue;
+        @Face(
+                displayName = "인풋박스"
+        )
+        @Order(10)
+        public String getInputValue() { return inputValue; }
+        public void setInputValue(String inputValue) { this.inputValue = inputValue; }
+    /*
+
+    String otherRadioValue;
+        @Face(
+                displayName = "라디오버튼2",
+                faceClass = SomeValueRadioFace.class,
+                ejsPath = "dwr/metaworks/genericfaces/RadioButton.ejs"
+        )
+        @Order(9)
+        public String getOtherRadioValue() {return otherRadioValue; }
+        public void setOtherRadioValue(String otherRadioValue) { this.otherRadioValue = otherRadioValue; }
+*/
+
+    @Override
+    public ValidationContext validate(Map options) {
+
+
+        ValidationContext validationContext =  super.validate(options);
+
+        if(getInputValue()==null){
+            validationContext.addWarning("Input Value must be set.");
+        }
+
+        return validationContext;
+    }
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
