@@ -6,12 +6,14 @@ import com.abc.activitytype.view.TableSelector;
 import com.abc.face.DynamicSelectBoxFace;
 import com.abc.face.ParameterValueListFace;
 import com.abc.face.ParameterVariable;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Order;
+import org.metaworks.EventContext;
+import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.*;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ValidationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -141,6 +143,15 @@ public class DataInputActivity extends DefaultActivity {
 
         return validationContext;
     }
+
+
+
+    @Hidden
+    @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_CHANGE, bindingFor = "inputTable", bindingHidden = true, target = ServiceMethodContext.TARGET_SELF)
+    public void onInputTableChanged() {
+
+    }
+
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {

@@ -1,6 +1,13 @@
 package com.abc.activitytype.view;
 
+import com.abc.activitytype.DataInputActivity;
+import org.metaworks.EventContext;
 import org.metaworks.Face;
+import org.metaworks.MetaworksContext;
+import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.AutowiredFromClient;
+import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.MultiSelectBox;
 
 import java.util.ArrayList;
@@ -12,10 +19,10 @@ import java.util.List;
 public class OutputColumnSelectorFace extends MultiSelectBox implements Face<List<String>> {
 
     /**
-     * ¼¿·ºÆ®¹Ú½º¿¡¼­ ¿©·¯°³¸¦ »ý¼ºÇÏ±â À§ÇØ¼­´Â ´ÙÀ½°ú °°ÀÌ setMultiple()¿¡ true·Î ¼¼ÆÃÇÑ´Ù.
-     * »ý¼ºÀÚ¿¡ ¼¿·ºÆ® ¹Ú½ºÀÇ option°ú value¸¦ ¼¼ÆÃÇÑ´Ù.
-     * getOptionNames¿¡ option°ªÀ» addÇØ¼­ ¼¼ÆÃÇÏ°í
-     * optionÀÇ values¸¦ ¼¼ÆÃÇÑ optionÀ¸·Î ¼¼ÆÃÇÑ´Ù. ÀÌ·¸°Ô ÇÏ¸é ´ÙÀ½°ú °°Àº Çü½ÄÀ¸·Î UI°¡ »ý¼ºµÈ´Ù.
+     * ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ setMultiple()ï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ú½ï¿½ï¿½ï¿½ optionï¿½ï¿½ valueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+     * getOptionNamesï¿½ï¿½ optionï¿½ï¿½ï¿½ï¿½ addï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+     * optionï¿½ï¿½ valuesï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ optionï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½È´ï¿½.
      * <select><br>
      *     <opition="Col1">Col1</opition><br>
      *     <opition="Col2">Col2</opition><br>
@@ -23,17 +30,28 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
      *     .<br>
      * </select>
      */
-    public OutputColumnSelectorFace(){
+    public OutputColumnSelectorFace() {
+    }
+
+    @ServiceMethod(onLoad = true, target = ServiceMethod.TARGET_SELF)
+    public void onLoad(@AutowiredFromClient DataInputActivity dataInputActivity){
 
         setMultiple(true);
-        getOptionNames().add("Col1");
-        getOptionNames().add("Col2");
-        getOptionNames().add("Col3");
-        getOptionNames().add("Col4");
-        getOptionNames().add("Col5");
+
+        setOptionNames(new ArrayList<String>());
+
+        for(int i=0; i<3; i++)
+            getOptionNames().add(dataInputActivity.getInputTable() + ".Col" + i);
+
         setOptionValues(getOptionNames());
 
+        setMetaworksContext(new MetaworksContext());
+        getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+
     }
+
+
+
 
     @Override
     public void setValueToFace(List<String> value) {
@@ -66,4 +84,6 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
 
         return valuesInList;
     }
+
+
 }
