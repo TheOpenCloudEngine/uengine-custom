@@ -1,0 +1,11 @@
+.svn/
+.git/
+.settings/
+target/
+.idea
+*.iml
+.classpath
+.project
+.DS_Store
+overlays/
+log/

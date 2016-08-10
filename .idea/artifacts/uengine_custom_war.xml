@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="uengine-custom:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="uengine-custom-1.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="uengine-custom:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,7 +1,6 @@
 package com.abc.modeler;
 
-import com.abc.activitytype.AnalysisActivity;
-import com.abc.activitytype.CustomSQLActivity;
+
 import com.abc.activitytype.view.*;
 import org.uengine.kernel.bpmn.view.PoolView;
 import org.uengine.kernel.bpmn.view.SubProcessView;
@@ -25,6 +24,8 @@ public class AnalysisPalette extends PaletteWindow {
         addSymbol((new ShellActivityView()).createSymbol());
         addSymbol((new HadoopActivityView()).createSymbol());
         addSymbol((new CustomSQLActivityView()).createSymbol());
+        addSymbol((new HiveActivityView()).createSymbol());
+        addSymbol((new DataInputActivityView()).createSymbol());
     }
 
     public AnalysisPalette(String type) {
