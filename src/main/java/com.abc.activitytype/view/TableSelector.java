@@ -9,9 +9,9 @@ import org.metaworks.component.SelectBox;
 public class TableSelector extends SelectBox implements Face<String> {
 
     /**
-     * »ý¼ºÀÚ¿¡ ¼¿·ºÆ® ¹Ú½ºÀÇ option°ú value¸¦ ¼¼ÆÃÇÑ´Ù.
-     * getOptionNames¿¡ option°ªÀ» addÇØ¼­ ¼¼ÆÃÇÏ°í
-     * optionÀÇ values¸¦ ¼¼ÆÃÇÑ optionÀ¸·Î ¼¼ÆÃÇÑ´Ù. ÀÌ·¸°Ô ÇÏ¸é ´ÙÀ½°ú °°Àº Çü½ÄÀ¸·Î UI°¡ »ý¼ºµÈ´Ù.
+     * ìƒì„±ìžì— ì…€ë ‰íŠ¸ ë°•ìŠ¤ì˜ optionê³¼ valueë¥¼ ì„¸íŒ…í•œë‹¤.
+     * getOptionNamesì— optionê°’ì„ addí•´ì„œ ì„¸íŒ…í•˜ê³ 
+     * optionì˜ valuesë¥¼ ì„¸íŒ…í•œ optionìœ¼ë¡œ ì„¸íŒ…í•œë‹¤. ì´ë ‡ê²Œ í•˜ë©´ ë‹¤ìŒê³¼ ê°™ì€ í˜•ì‹ìœ¼ë¡œ UIê°€ ìƒì„±ëœë‹¤.
      * <select><br>
      *     <opition="Tables1">Table1</opition><br>
      *     <opition="Tables2">Table2</opition><br>
