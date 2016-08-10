@@ -186,10 +186,23 @@ public class DataInputActivity extends DefaultActivity {
             System.out.println(paramIdx+"번째 [paramVar] : " + paramVar.getParameter());
             filterIdx++;
         }
-        System.out.println("================= ParameterVariable Values===============");
+        System.out.println("================= ParameterVariable Values End===============");
 
         System.out.println("CheckBox is " + isCheckBox());
         System.out.println("radioValue is " + getRadioValue());
+
+        System.out.println("================= Dynamic Multi Select Values===============");
+        Map<String, List<String>> dmSelectMap = getDynamicSelectBoxWithMulti();
+        System.out.println("Main Selected Value is "+dmSelectMap.get("mainSelectBox"));
+        System.out.println("Sub Multi Selected Value is " +dmSelectMap.get("subSelectBox"));
+        System.out.println("================= Dynamic Multi Select Values End===============");
+
+
+        System.out.println("================= Dynamic Single Select Values===============");
+        Map<String, List<String>> dsSelectMap = getDynamicSelectBoxWithSingle();
+        System.out.println("Main Selected Value is "+dsSelectMap.get("mainSelectBox"));
+        System.out.println("Sub Single Selected Value is " +dsSelectMap.get("subSelectBox"));
+        System.out.println("================= Dynamic Single Select Values End===============");
     }
 
 }
