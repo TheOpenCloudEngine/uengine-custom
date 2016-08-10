@@ -3,7 +3,8 @@ package com.abc.activitytype;
 import com.abc.activitytype.view.FilterInformationListFace;
 import com.abc.activitytype.view.OutputColumnSelectorFace;
 import com.abc.activitytype.view.TableSelector;
-import com.abc.face.DynamicSelectBoxFace;
+import com.abc.face.DynamicSelectBoxWithMultiFace;
+import com.abc.face.DynamicSelectBoxWithSingleFace;
 import com.abc.face.ParameterValueListFace;
 import com.abc.face.ParameterVariable;
 import org.metaworks.annotation.Face;
@@ -99,21 +100,29 @@ public class DataInputActivity extends DefaultActivity {
         public String getRadioValue() { return radioValue; }
         public void setRadioValue(String radioValue) { this.radioValue = radioValue; }
 
-    Map<String, List<String>> dynamicSelectBox;
+    Map<String, List<String>> dynamicSelectBoxWithMulti;
         @Face(
-                displayName = "다이나믹 셀렉트",
-                faceClass = DynamicSelectBoxFace.class
+                displayName = "다이나믹 멀티셀렉트",
+                faceClass = DynamicSelectBoxWithMultiFace.class
         )
         @Order(9)
-        public Map<String, List<String>> getDynamicSelectBox() { return dynamicSelectBox; }
-        public void setDynamicSelectBox(Map<String, List<String>> dynamicSelectBox) { this.dynamicSelectBox = dynamicSelectBox; }
+        public Map<String, List<String>> getDynamicSelectBoxWithMulti() { return dynamicSelectBoxWithMulti; }
+        public void setDynamicSelectBoxWithMulti(Map<String, List<String>> dynamicSelectBoxWithMulti) { this.dynamicSelectBoxWithMulti = dynamicSelectBoxWithMulti; }
 
+    Map<String, List<String>> dynamicSelectBoxWithSingle;
+        @Face(
+                displayName = "다이나믹 싱글셀렉트",
+                faceClass = DynamicSelectBoxWithSingleFace.class
+        )
+        @Order(10)
+        public Map<String, List<String>> getDynamicSelectBoxWithSingle() { return dynamicSelectBoxWithSingle; }
+        public void setDynamicSelectBoxWithSingle(Map<String, List<String>> dynamicSelectBoxWithSingle) { this.dynamicSelectBoxWithSingle = dynamicSelectBoxWithSingle; }
 
     String inputValue;
         @Face(
                 displayName = "인풋박스"
         )
-        @Order(10)
+        @Order(11)
         public String getInputValue() { return inputValue; }
         public void setInputValue(String inputValue) { this.inputValue = inputValue; }
     /*

@@ -6,10 +6,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.MultiSelectBox;
-import org.uengine.essencia.component.EssenciaSelectBox;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.State;
-import org.uengine.modeling.IElement;
+import org.metaworks.component.SelectBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,30 +16,31 @@ import java.util.Map;
 /**
  * Created by uEngineYBS on 2016-08-09.
  */
-public class DynamicSelectBoxFace extends MainSelectBoxFace implements Face<Map<String, List<String>>> {
+public class DynamicSelectBoxWithSingleFace extends MainSelectBoxFace implements Face<Map<String, List<String>>> {
 
-    private transient MultiSelectBox subSelectBox;
-        public MultiSelectBox getSubSelectBox() {
+    private transient SelectBox subSelectBox;
+        public SelectBox getSubSelectBox() {
             return subSelectBox;
         }
-        public void setSubSelectBox(MultiSelectBox subSelectBox) {
+        public void setSubSelectBox(SelectBox subSelectBox) {
             this.subSelectBox = subSelectBox;
         }
 
-    public DynamicSelectBoxFace() {
+    public DynamicSelectBoxWithSingleFace() {
         super();
         getMainSelectBox().getOptionNames().add("==== choose ====");
         getMainSelectBox().getOptionNames().add("test1");
         getMainSelectBox().getOptionNames().add("test2");
         getMainSelectBox().getOptionNames().add("test3");
         getMainSelectBox().setOptionValues(getMainSelectBox().getOptionNames());
-        setSubSelectBox(new MultiSelectBox());
+        setSubSelectBox(new SelectBox());
     }
 
     @Hidden
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_CHANGE, bindingFor = "mainSelectBox", bindingHidden = true, target = ServiceMethodContext.TARGET_SELF)
     public void selectBoxChanged() {
-        setSubSelectBox(new MultiSelectBox());
+        setSubSelectBox(new SelectBox());
+        getSubSelectBox().add("=== choose ===", "-1");
         if("test1".equals(getMainSelectBox().getSelected())) {
             for(int i=1; i<4 ; i++) {
                 getSubSelectBox().add("TEST" + i, "TEST" + i);
@@ -71,14 +69,8 @@ public class DynamicSelectBoxFace extends MainSelectBoxFace implements Face<Map<
             }
 
             if(subSelectedValueList !=null && subSelectedValueList.size()>0) {
-                String subValueStr = "";
-                String sep = "";
-
-                for (String subValueItem : subSelectedValueList) {
-                    subValueStr += sep + subValueItem;
-                    sep = ", ";
-                }
-                setSubSelectBox(new MultiSelectBox());
+                setSubSelectBox(new SelectBox());
+                getSubSelectBox().add("=== choose ===", "-1");
                 if("test1".equals(mainSelectedValueList.get(0))) {
                     for(int i=1; i<4 ; i++) {
                         getSubSelectBox().add("TEST" + i, "TEST" + i);
@@ -92,7 +84,7 @@ public class DynamicSelectBoxFace extends MainSelectBoxFace implements Face<Map<
                         getSubSelectBox().add("TEST"+t, "TEST"+t);
                     }
                 }
-                getSubSelectBox().setSelected(subValueStr);
+                getSubSelectBox().setSelected(subSelectedValueList.get(0));
             }
         }
 
@@ -106,19 +98,10 @@ public class DynamicSelectBoxFace extends MainSelectBoxFace implements Face<Map<
         mainSelectedValueList.add(getMainSelectBox().getSelected());
         createValueMap.put("mainSelectBox", mainSelectedValueList);
 
-
         List<String> subValuesInList = new ArrayList<String>();
-
-        if(getSubSelectBox().getSelected()!=null) {
-            String[] subSelectedvalues = getSubSelectBox().getSelected().split(", ");
-
-            for (String subValue : subSelectedvalues) {
-                subValuesInList.add(subValue);
-            }
-        } else {
-            subValuesInList = null;
-        }
+        subValuesInList.add(getSubSelectBox().getSelected());
         createValueMap.put("subSelectBox", subValuesInList);
+
         return createValueMap;
     }
 }
