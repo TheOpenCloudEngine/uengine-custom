@@ -48,6 +48,10 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
         setMetaworksContext(new MetaworksContext());
         getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
+        if(dataInputActivity.getOutputColumn() != null && dataInputActivity.getOutputColumn().size()>0 ) {
+            this.setValueToFace(dataInputActivity.getOutputColumn());
+        }
+
     }
 
 
@@ -55,6 +59,7 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
 
     @Override
     public void setValueToFace(List<String> value) {
+
         if(value!=null && value.size() > 0){
 
             String valueStr = "";
