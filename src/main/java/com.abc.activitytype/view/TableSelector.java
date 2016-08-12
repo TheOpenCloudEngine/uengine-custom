@@ -4,24 +4,15 @@ import org.metaworks.Face;
 import org.metaworks.component.SelectBox;
 
 /**
-<<<<<<< HEAD
  * Created by jjy on 2016. 8. 8..
  */
-public class TableSelector extends SelectBox implements Face<String> {
 
-    public TableSelector(){
-
-        super();
-
-=======
- * Created by jjy on 2016-08-08.
- */
 public class TableSelector extends SelectBox implements Face<String> {
 
     /**
-     * »ý¼ºÀÚ¿¡ ¼¿·ºÆ® ¹Ú½ºÀÇ option°ú value¸¦ ¼¼ÆÃÇÑ´Ù.
-     * getOptionNames¿¡ option°ªÀ» addÇØ¼­ ¼¼ÆÃÇÏ°í
-     * optionÀÇ values¸¦ ¼¼ÆÃÇÑ optionÀ¸·Î ¼¼ÆÃÇÑ´Ù. ÀÌ·¸°Ô ÇÏ¸é ´ÙÀ½°ú °°Àº Çü½ÄÀ¸·Î UI°¡ »ý¼ºµÈ´Ù.
+     * ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ú½ï¿½ï¿½ï¿½ optionï¿½ï¿½ valueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+     * getOptionNamesï¿½ï¿½ optionï¿½ï¿½ï¿½ï¿½ addï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+     * optionï¿½ï¿½ valuesï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ optionï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½È´ï¿½.
      * <select><br>
      *     <opition="Tables1">Table1</opition><br>
      *     <opition="Tables2">Table2</opition><br>
@@ -32,21 +23,15 @@ public class TableSelector extends SelectBox implements Face<String> {
     public TableSelector(){
 
         super();
->>>>>>> 8b834f34eb5d1f5fe843cdd899d68dd6caa20557
+
         getOptionNames().add("Table1");
         getOptionNames().add("Table2");
         getOptionNames().add("Table3");
         getOptionNames().add("Table4");
-<<<<<<< HEAD
 
-    }
-
-
-=======
         setOptionValues(getOptionNames());
     }
 
->>>>>>> 8b834f34eb5d1f5fe843cdd899d68dd6caa20557
     @Override
     public void setValueToFace(String value) {
         setSelected(value);
@@ -56,8 +41,4 @@ public class TableSelector extends SelectBox implements Face<String> {
     public String createValueFromFace() {
         return getSelected();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8b834f34eb5d1f5fe843cdd899d68dd6caa20557

@@ -14,7 +14,7 @@ import org.uengine.modeling.Symbol;
 /**
  * Created by jjy on 2016. 7. 18..
  */
-public class AnalysisPalette extends PaletteWindow {
+public class AnalysisPalette extends Palette {
 
     public AnalysisPalette() {
         this.setName("Analysis");
