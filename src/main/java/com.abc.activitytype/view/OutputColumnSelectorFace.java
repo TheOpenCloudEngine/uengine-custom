@@ -1,12 +1,9 @@
 package com.abc.activitytype.view;
 
 import com.abc.activitytype.DataInputActivity;
-import org.metaworks.EventContext;
 import org.metaworks.Face;
 import org.metaworks.MetaworksContext;
-import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.AutowiredFromClient;
-import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.MultiSelectBox;
 
@@ -14,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-
  * Created by jjy on 2016-08-08.
  */
 public class OutputColumnSelectorFace extends MultiSelectBox implements Face<List<String>> {
@@ -55,9 +51,6 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
 
     }
 
-
-
-
     @Override
     public void setValueToFace(List<String> value) {
 
@@ -90,5 +83,4 @@ public class OutputColumnSelectorFace extends MultiSelectBox implements Face<Lis
 
         return valuesInList;
     }
-
 }
