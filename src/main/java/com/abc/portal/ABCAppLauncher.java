@@ -20,6 +20,7 @@ import org.uengine.social.SocialBPMAppList;
 @Order(5)
 public class ABCAppLauncher extends SocialBPMAppList {
     public ABCAppLauncher() {
+
     }
 
     @Override

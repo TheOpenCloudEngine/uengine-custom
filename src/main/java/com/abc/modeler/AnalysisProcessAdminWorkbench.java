@@ -1,27 +1,35 @@
 package com.abc.modeler;
 
+import com.abc.modeler.dbnavigator.DatabaseNavigator;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.modeling.resource.IContainer;
+import org.uengine.modeling.resource.Workbench;
+import org.uengine.processadmin.ProcessAdminResourceNavigator;
 import org.uengine.processadmin.ProcessAdminWorkbench;
+import org.uengine.processadmin.RecentEditedResourcesPanel;
 
 /**
  * Created by jjy on 2016. 8. 12..
  */
-public class AnalysisProcessAdminWorkbench extends ProcessAdminWorkbench {
+public class AnalysisProcessAdminWorkbench extends Workbench {
 
+    public AnalysisProcessAdminWorkbench() {
 
-    public AnalysisProcessAdminWorkbench(){
+        super(new ProcessAdminResourceNavigator());
 
-        super();
-
-        setResourceNavigator(new AnalysisResourceNavigator());
-
+        try {
+            setEditorPanel(new RecentEditedResourcesPanel(getResourceNavigator()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-//
-//    DatabaseNavigator databaseNavigator;
-//        public DatabaseNavigator getDatabaseNavigator() {
-//            return databaseNavigator;
-//        }
-//        public void setDatabaseNavigator(DatabaseNavigator databaseNavigator) {
-//            this.databaseNavigator = databaseNavigator;
-//        }
+
+    DatabaseNavigator databaseNavigator;
+        public DatabaseNavigator getDatabaseNavigator() {
+            return new DatabaseNavigator();
+        }
+        public void setDatabaseNavigator(DatabaseNavigator databaseNavigator) {
+            this.databaseNavigator = databaseNavigator;
+        }
 
 }
