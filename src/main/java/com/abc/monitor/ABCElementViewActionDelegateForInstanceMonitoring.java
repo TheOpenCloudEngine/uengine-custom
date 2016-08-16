@@ -4,6 +4,7 @@ import com.abc.activitytype.CustomSQLActivity;
 import com.abc.activitytype.HiveActivity;
 import com.abc.activitytype.ShellActivity;
 import com.abc.activitytype.SyncActivity;
+import com.abc.activitytype.interceptor.ScriptBaseAbstractTask;
 import com.abc.activitytype.interceptor.TaskAttributes;
 import com.abc.activitytype.interceptor.TaskHistory;
 import com.abc.activitytype.view.*;
@@ -43,17 +44,18 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
         if (elementView instanceof AnalysisActivityView) {
             MetaworksRemoteService.wrapReturn(new ModalWindow(new IFrame("/data/ssh/" + getInstanceId()), elementView.getElement().getDescription()));
 
-        } else if (elementView instanceof HiveActivityView) {
+        } else if (elementView instanceof HiveActivityView
+                || elementView instanceof SparkActivityView
+                || elementView instanceof MapreduceActivityView) {
 
             try {
                 ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
-                HiveActivity hiveActivity = (HiveActivity) elementView.getElement();
+                ScriptBaseAbstractTask abstractTask = (ScriptBaseAbstractTask) elementView.getElement();
 
                 ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
-                TaskHistory taskHistory = taskAttributes.getTaskHistory(instance, hiveActivity.getTracingTag());
+                TaskHistory taskHistory = taskAttributes.getTaskHistory(instance, abstractTask.getTracingTag());
                 String stdout = taskHistory.getStdout();
-                MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), hiveActivity.getTracingTag())));
-
+                MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
 
             } catch (RemoteException e) {
                 e.printStackTrace();

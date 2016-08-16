@@ -16,7 +16,8 @@ public class DataProcessingPalette extends Palette {
         addSymbol((new AnalysisActivityView()).createSymbol());
         addSymbol((new SyncActivityView()).createSymbol());
         addSymbol((new ShellActivityView()).createSymbol());
-        addSymbol((new HadoopActivityView()).createSymbol());
+        addSymbol(new SparkActivityView().createSymbol());
+        addSymbol(new MapreduceActivityView().createSymbol());
         addSymbol((new CustomSQLActivityView()).createSymbol());
         addSymbol((new HiveActivityView()).createSymbol());
         addSymbol((new DataInputActivityView()).createSymbol());

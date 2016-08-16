@@ -1,5 +1,6 @@
 package com.abc.activitytype.interceptor;
 
+import com.abc.activitytype.interceptor.builder.ScriptBuilder;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,11 @@ public abstract class ScriptBaseAbstractTask extends DefaultActivity {
     public VelocityEngine velocityEngine;
 
     /**
+     * 스크립트 빌더
+     */
+    public ScriptBuilder scriptBuilder;
+
+    /**
      * SLF4J Logging
      */
     private Logger logger = LoggerFactory.getLogger(ScriptBaseAbstractTask.class);
@@ -85,6 +91,7 @@ public abstract class ScriptBaseAbstractTask extends DefaultActivity {
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         taskAttributes = context.getBean(TaskAttributes.class);
         velocityEngine = context.getBean(VelocityEngine.class);
+        scriptBuilder = context.getBean(ScriptBuilder.class);
         properties = GlobalContext.getProperties();
 
         String temp = properties.getProperty("hadoop.temp.dir");

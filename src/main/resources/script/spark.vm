@@ -1,0 +1,39 @@
+# simulate a long process that will have an identifiable exit code
+
+agent=__agent
+export HADOOP_CLIENT_OPTS=-javaagent:$agent=resourcescript:mr2.bm
+export HADOOP_USER_NAME=__user
+current_dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+chmod 777 $current_dir
+kill_script=$current_dir/kill.sh
+cmd() {
+__sparkhome/bin/spark-submit --class __className --master yarn --deploy-mode cluster __jar __args |
+while read line; do
+echo "$line"
+done
+}
+
+cmd &
+my_pid=$!
+echo $my_pid > $current_dir/.PID
+
+while [ -n "$(ps -p $my_pid -o pid=)" ]     # might also need  | grep -v grep  here
+do
+echo "" > $kill_script
+for entry in "$current_dir"/*
+do
+fname=`basename $entry`
+if echo "$fname" | grep -q "app."
+then
+echo sudo su - yarn -c \"yarn application -kill ${fname#app.}\" >> $kill_script
+elif echo "$fname" | grep -q "hadoop."
+then
+echo sudo su - mapred -c \"mapred job -kill ${fname#hadoop.}\" >> $kill_script
+fi
+done
+sleep 1
+done
+
+wait $my_pid
+exitcode=$?
+echo $exitcode > $current_dir/.EXITCODE
