@@ -25,6 +25,7 @@ import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.social.ElementViewActionDelegateForInstanceMonitoring;
 import org.uengine.web.util.ApplicationContextRegistry;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
 /**
@@ -53,11 +54,16 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
                 ScriptBaseAbstractTask abstractTask = (ScriptBaseAbstractTask) elementView.getElement();
 
                 ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
-                TaskHistory taskHistory = taskAttributes.getTaskHistory(instance, abstractTask.getTracingTag());
-                if(taskHistory != null){
-                    String stdout = taskHistory.getStdout();
-                    MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
+                //TaskHistory taskHistory = taskAttributes.getTaskHistory(instance, abstractTask.getTracingTag());
+                String stdout = "";
+                Serializable serializable = instance.getProperty(abstractTask.getTracingTag(), "stdout");
+                if(serializable != null){
+                    stdout = (String)serializable;
                 }
+                MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
+//                if(taskHistory != null){
+//                    MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
+//                }
 
             } catch (RemoteException e) {
                 e.printStackTrace();

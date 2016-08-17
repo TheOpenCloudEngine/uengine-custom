@@ -158,6 +158,15 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
         taskHistory.setStderr(stderr);
         taskHistory.setScript(script);
         taskHistory.setSshCommand(sshCommand);
+
+        try{
+            instance.setProperty(getTracingTag(), "stdout", stdout);
+            instance.setProperty(getTracingTag(),"stderr",stderr);
+            instance.setProperty(getTracingTag(),"script",script);
+            instance.setProperty(getTracingTag(),"sshCommand",sshCommand);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     //성공시 sk 애널리틱스만의 후처리
