@@ -32,6 +32,7 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             stderr = ExceptionUtils.getFullStackTrace(ex);
             try {
                 updateTaskHistoryData();

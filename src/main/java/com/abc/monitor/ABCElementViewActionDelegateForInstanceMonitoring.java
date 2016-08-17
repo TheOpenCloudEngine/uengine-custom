@@ -54,8 +54,10 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
 
                 ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
                 TaskHistory taskHistory = taskAttributes.getTaskHistory(instance, abstractTask.getTracingTag());
-                String stdout = taskHistory.getStdout();
-                MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
+                if(taskHistory != null){
+                    String stdout = taskHistory.getStdout();
+                    MetaworksRemoteService.wrapReturn(new ModalWindow(new ShellDetailView(new Console(stdout), getInstanceId(), abstractTask.getTracingTag())));
+                }
 
             } catch (RemoteException e) {
                 e.printStackTrace();

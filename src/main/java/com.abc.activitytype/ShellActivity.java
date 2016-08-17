@@ -6,6 +6,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
+import org.apache.commons.io.IOUtils;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
@@ -124,7 +125,6 @@ public class ShellActivity extends DefaultActivity{
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
-        instance.set("aa","[bb]");
         JSch jsch = new JSch();
 
         if(getIdentityPemFilePath()!=null && getIdentityPemFilePath().trim().length() > 0) {
@@ -179,14 +179,6 @@ public class ShellActivity extends DefaultActivity{
         String[] commandLines = evaluateContent(instance, getCommand()).toString().split("\n");
 
         for(String commandLine : commandLines){
-
-            //final Boolean stopSignaled =
-            //        (Boolean) instance.getProperty(getTracingTag(), "stopSignaled");
-
-            //if(stopSignaled) {
-            //    commandLine = getKillScript();
-            // }
-
             ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
             channelExec.setPty(false);
             //      if (isDebugMode) System.out.println("command : " + command);
@@ -196,96 +188,63 @@ public class ShellActivity extends DefaultActivity{
             //InputStream ext = channelExec.getExtInputStream();
             final InputStream err = channelExec.getErrStream();
             channelExec.connect(3000);
-
-            final ArrayList count = new ArrayList();
-
-            new Thread(){
-                @Override
-                public void run() {
-
-                    StringBuffer output = new StringBuffer();
-                    byte[] buf = new byte[1024];
-                    int length;
-
-
-                    try {
-                        while ((length = inputStream.read(buf)) != -1) {
-                            String str = new String(buf, 0, length);
-                            output.append(str);
-
-                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                            existingLog += output.toString();
-
-                            instance.setProperty(getTracingTag(), "log", existingLog);
-
-                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
-
-
-                            System.out.println(str);
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    count.add("");
-
-
+            byte[] buf = new byte[1024];
+            int length;
+            try {
+                while ((length = inputStream.read(buf)) != -1) {
+                    String str = new String(buf, 0, length);
+                    System.out.println(str);
                 }
-
-            }.start();
-
-
-            new Thread() {
-                @Override
-                public void run() {
-
-
-                    StringBuffer output = new StringBuffer();
-                    byte[] buf = new byte[1024];
-                    int length;
-
-
-                    try {
-                        while ((length = err.read(buf)) != -1) {
-                            String str = new String(buf, 0, length);
-                            output.append(str);
-
-                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                            existingLog += output.toString();
-
-                            instance.setProperty(getTracingTag(), "log", existingLog);
-
-                            Console console = new Console(str);
-                            console.setColor("#f1c40f");
-                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), console)});
-
-                            System.out.println(str);
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    count.add("");
-                }
-            }.start();
-
-            for(;;){
-                Thread.sleep(1000);
-                if(count.size() == 2) break;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            channelExec.disconnect();
+//            final ArrayList count = new ArrayList();
+//
+//            new Thread(){
+//                @Override
+//                public void run() {
+//
+//                    StringBuffer output = new StringBuffer();
+//                    byte[] buf = new byte[1024];
+//                    int length;
+//
+//
+//                    try {
+//                        while ((length = inputStream.read(buf)) != -1) {
+//                            String str = new String(buf, 0, length);
+//                            output.append(str);
+//
+//                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
+//                            existingLog += output.toString();
+//
+//                            instance.setProperty(getTracingTag(), "log", existingLog);
+//
+//                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
+//
+//
+//                            System.out.println(str);
+//
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    count.add("");
+//                }
+//
+//            }.start();
+//            for(;;){
+//                Thread.sleep(1000);
+//                if(count.size() == 1) break;
+//            }
 
-            //if(stopSignaled)
-            //    break;
+            channelExec.disconnect();
         }
 
         session.disconnect();
 
+        //fireComplete(instance);
         super.executeActivity(instance);
-
-
     }
 }
