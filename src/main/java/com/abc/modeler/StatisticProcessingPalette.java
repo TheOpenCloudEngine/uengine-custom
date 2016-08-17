@@ -13,13 +13,13 @@ public class StatisticProcessingPalette extends Palette {
     public StatisticProcessingPalette() {
         this.setName("Statistic Processing");
 
-        addSymbol((new AnalysisActivityView()).createSymbol());
-        addSymbol((new SyncActivityView()).createSymbol());
-        addSymbol((new ShellActivityView()).createSymbol());
-        addSymbol((new HadoopActivityView()).createSymbol());
-        addSymbol((new CustomSQLActivityView()).createSymbol());
-        addSymbol((new HiveActivityView()).createSymbol());
-        addSymbol((new DataInputActivityView()).createSymbol());
+//        addSymbol((new AnalysisActivityView()).createSymbol());
+//        addSymbol((new SyncActivityView()).createSymbol());
+//        addSymbol((new ShellActivityView()).createSymbol());
+//        addSymbol((new HadoopActivityView()).createSymbol());
+//        addSymbol((new CustomSQLActivityView()).createSymbol());
+//        addSymbol((new HiveActivityView()).createSymbol());
+//        addSymbol((new DataInputActivityView()).createSymbol());
     }
 
     public StatisticProcessingPalette(String type) {

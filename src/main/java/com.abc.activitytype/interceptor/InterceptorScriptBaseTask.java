@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.web.util.ExceptionUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,10 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
 
     @Override
     public void doExecute() throws Exception {
+
+        //유니크 값, 액티비티마다 동일함.
+        String jobId = instance.getInstanceId();
+
         preRun();
 
         try {
@@ -25,9 +30,14 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
             updateTaskHistoryData();
             if (StringUtils.isEmpty(taskHistory.getStderr())) {
                 updateTaskHistoryAsFinished();
+
+
+
                 fireComplete(instance);
             } else {
                 updateTaskHistoryAsFailed();
+
+
                 fireFault(instance, new Exception(taskHistory.getStderr()));
             }
 
@@ -37,6 +47,7 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
             try {
                 updateTaskHistoryData();
                 updateTaskHistoryAsFailed();
+
                 fireFault(instance, new Exception(taskHistory.getStderr()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -147,5 +158,15 @@ public abstract class InterceptorScriptBaseTask extends ScriptBaseAbstractTask {
         taskHistory.setStderr(stderr);
         taskHistory.setScript(script);
         taskHistory.setSshCommand(sshCommand);
+    }
+
+    //성공시 sk 애널리틱스만의 후처리
+    private void saveAsFinished() {
+
+    }
+
+    //실패시 sk 애널리틱스만의 후처리
+    private void saveAsFailed() {
+
     }
 }

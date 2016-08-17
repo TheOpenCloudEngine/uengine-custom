@@ -10,6 +10,9 @@ import org.uengine.modeling.Symbol;
  */
 public class DataProcessingPalette extends Palette {
 
+    //여기다가 DP 타입을 추가해주세요.
+
+
     public DataProcessingPalette() {
         this.setName("Data Processing");
 

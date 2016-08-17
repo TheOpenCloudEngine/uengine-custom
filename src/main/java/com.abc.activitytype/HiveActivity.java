@@ -83,6 +83,14 @@ public class HiveActivity extends InterceptorScriptBaseTask {
 
     @Override
     public void runTask() throws Exception {
+
+        //워크플로우가 실행된 후 유니크 아이디
+        String instanceId = instance.getInstanceId();
+
+        //액티비티의 아이디 (유니크가 아니고 1,2,3 등으로 떨어짐)
+        String tracingTag = getTracingTag();
+
+
         //props 를 쿼리문에 치환한다.
         Map propsMap = new HashMap();
         if (!StringUtils.isEmpty(props)) {
