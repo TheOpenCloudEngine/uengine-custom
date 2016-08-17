@@ -127,6 +127,7 @@ public class HiveActivity extends InterceptorScriptBaseTask {
          * 스크립트 파일은 hive 유저 권한으로 실행될 커맨드를 저장한다.
          * 샘플) sudo su - hive -c "/usr/hdp/2.4.2.0-258/hive/bin/hive -f /tmp/sk/20231230019223/hive.sql"
          */
+        //이부분이 틀려짐.
         script = scriptBuilder.getHive(doAs, null);
 
         //스크립트 파일이 저장될 패스
@@ -145,6 +146,7 @@ public class HiveActivity extends InterceptorScriptBaseTask {
          * ssh 커맨드는 원격지에 저장된 스크립트 파일을 sudo 권한이 있는 계정으로 실행시키기 위한 명령어이다.
          * 샘플) sudo /bin/sh /tmp/sk/20231230019223/script.sh
          */
+        //커맨드 날리는 부분이 틀려짐.(cd ... 가 틀려짐.)
         sshCommand = "cd " + tempDir + " && sudo /bin/sh " + scriptFilePath;
 
         //Jsch 세션의 인풋스트림을 제어해야 함으로 세션을 직접 컨트롤한다.
