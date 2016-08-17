@@ -6,11 +6,13 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
+import org.apache.commons.io.IOUtils;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Group;
 import org.metaworks.annotation.Order;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.springframework.util.StringUtils;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by jjy on 2016. 7. 25..
  */
-public class ShellActivity extends DefaultActivity{
+public class ShellActivity extends DefaultActivity {
 
     public ShellActivity() {
         super("Shell");
@@ -33,7 +35,8 @@ public class ShellActivity extends DefaultActivity{
     }
 
     String command;
-    @Group(name="Command")
+
+    @Group(name = "Command")
     @Face(
             ejsPath = "dwr/metaworks/genericfaces/richText.ejs",
             options = {"rows", "cols"},
@@ -43,35 +46,47 @@ public class ShellActivity extends DefaultActivity{
     public String getCommand() {
         return command;
     }
+
     public void setCommand(String command) {
         this.command = command;
     }
 
     String userId;
-    @Group(name="Credentials")
+
+    @Group(name = "Credentials")
     public String getUserId() {
         return userId;
     }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     String password;
-    @Group(name="Credentials")
+
+    @Group(name = "Credentials")
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
 
     String killScript;
-    public String getKillScript() { return killScript; }
-    public void setKillScript(String killScript) { this.killScript = killScript; }
+
+    public String getKillScript() {
+        return killScript;
+    }
+
+    public void setKillScript(String killScript) {
+        this.killScript = killScript;
+    }
 
     String host;
-    @Group(name="Host")
+
+    @Group(name = "Host")
     @Order(1)
     public String getHost() {
         return host;
@@ -82,52 +97,57 @@ public class ShellActivity extends DefaultActivity{
     }
 
     String port = "22";
-    @Group(name="Host")
+
+    @Group(name = "Host")
     @Order(2)
     public String getPort() {
         return port;
     }
+
     public void setPort(String port) {
         this.port = port;
     }
 
     String identityPemFilePath;
-    @Group(name="PEM_File")
+
+    @Group(name = "PEM_File")
     public String getIdentityPemFilePath() {
         return identityPemFilePath;
     }
+
     public void setIdentityPemFilePath(String identityPemFilePath) {
         this.identityPemFilePath = identityPemFilePath;
     }
 
     boolean strictHostKeyChecking;
-    @Group(name="Advanced")
+
+    @Group(name = "Advanced")
     public boolean isStrictHostKeyChecking() {
         return strictHostKeyChecking;
     }
+
     public void setStrictHostKeyChecking(boolean strictHostKeyChecking) {
         this.strictHostKeyChecking = strictHostKeyChecking;
     }
 
 
     String killCommand;
-        public String getKillCommand() {
-            return killCommand;
-        }
 
-        public void setKillCommand(String killCommand) {
-            this.killCommand = killCommand;
-        }
+    public String getKillCommand() {
+        return killCommand;
+    }
 
+    public void setKillCommand(String killCommand) {
+        this.killCommand = killCommand;
+    }
 
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
-        instance.set("aa","[bb]");
         JSch jsch = new JSch();
 
-        if(getIdentityPemFilePath()!=null && getIdentityPemFilePath().trim().length() > 0) {
+        if (getIdentityPemFilePath() != null && getIdentityPemFilePath().trim().length() > 0) {
             jsch.addIdentity(getIdentityPemFilePath());
             jsch.setConfig("StrictHostKeyChecking", "no");
         }
@@ -178,15 +198,8 @@ public class ShellActivity extends DefaultActivity{
 
         String[] commandLines = evaluateContent(instance, getCommand()).toString().split("\n");
 
-        for(String commandLine : commandLines){
-
-            //final Boolean stopSignaled =
-            //        (Boolean) instance.getProperty(getTracingTag(), "stopSignaled");
-
-            //if(stopSignaled) {
-            //    commandLine = getKillScript();
-            // }
-
+        String log = "";
+        for (String commandLine : commandLines) {
             ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
             channelExec.setPty(false);
             //      if (isDebugMode) System.out.println("command : " + command);
@@ -196,96 +209,67 @@ public class ShellActivity extends DefaultActivity{
             //InputStream ext = channelExec.getExtInputStream();
             final InputStream err = channelExec.getErrStream();
             channelExec.connect(3000);
-
-            final ArrayList count = new ArrayList();
-
-            new Thread(){
-                @Override
-                public void run() {
-
-                    StringBuffer output = new StringBuffer();
-                    byte[] buf = new byte[1024];
-                    int length;
-
-
-                    try {
-                        while ((length = inputStream.read(buf)) != -1) {
-                            String str = new String(buf, 0, length);
-                            output.append(str);
-
-                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                            existingLog += output.toString();
-
-                            instance.setProperty(getTracingTag(), "log", existingLog);
-
-                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
-
-
-                            System.out.println(str);
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            byte[] buf = new byte[1024];
+            int length;
+            try {
+                while ((length = inputStream.read(buf)) != -1) {
+                    String str = new String(buf, 0, length);
+                    System.out.println(str);
+                    if (!StringUtils.isEmpty(str)) {
+                        log = log + str;
+                        instance.setProperty(getTracingTag(), "log", log);
                     }
-
-                    count.add("");
-
-
                 }
-
-            }.start();
-
-
-            new Thread() {
-                @Override
-                public void run() {
-
-
-                    StringBuffer output = new StringBuffer();
-                    byte[] buf = new byte[1024];
-                    int length;
-
-
-                    try {
-                        while ((length = err.read(buf)) != -1) {
-                            String str = new String(buf, 0, length);
-                            output.append(str);
-
-                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
-                            existingLog += output.toString();
-
-                            instance.setProperty(getTracingTag(), "log", existingLog);
-
-                            Console console = new Console(str);
-                            console.setColor("#f1c40f");
-                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), console)});
-
-                            System.out.println(str);
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    count.add("");
-                }
-            }.start();
-
-            for(;;){
-                Thread.sleep(1000);
-                if(count.size() == 2) break;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            channelExec.disconnect();
+//            final ArrayList count = new ArrayList();
+//
+//            new Thread(){
+//                @Override
+//                public void run() {
+//
+//                    StringBuffer output = new StringBuffer();
+//                    byte[] buf = new byte[1024];
+//                    int length;
+//
+//
+//                    try {
+//                        while ((length = inputStream.read(buf)) != -1) {
+//                            String str = new String(buf, 0, length);
+//                            output.append(str);
+//
+//                            String existingLog = (String) instance.getProperty(getTracingTag(), "log");
+//                            existingLog += output.toString();
+//
+//                            instance.setProperty(getTracingTag(), "log", existingLog);
+//
+//                            MetaworksRemoteService.pushClientObjects(new Object[]{new ToAppend(new ConsolePanel(), new Console(str))});
+//
+//
+//                            System.out.println(str);
+//
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    count.add("");
+//                }
+//
+//            }.start();
+//            for(;;){
+//                Thread.sleep(1000);
+//                if(count.size() == 1) break;
+//            }
 
-            //if(stopSignaled)
-            //    break;
+            channelExec.disconnect();
         }
 
         session.disconnect();
 
+        //fireComplete(instance);
         super.executeActivity(instance);
-
-
     }
 }
