@@ -23,6 +23,9 @@ public class ABCAppLauncher extends SocialBPMAppList {
     }
 
     @Override
+    @ServiceMethod(
+            target = "append"
+    )
     public void goProcessAdmin() throws Exception {
         AnalysisProcessAdminApplication application = new AnalysisProcessAdminApplication();
         this.topPanel.setTopCenterTitle("Workflow Modeler");

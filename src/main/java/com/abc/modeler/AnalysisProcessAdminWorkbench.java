@@ -15,6 +15,8 @@ public class AnalysisProcessAdminWorkbench extends ProcessAdminWorkbench {
         setResourceNavigator(new AnalysisResourceNavigator());
 
     }
+
+
 //
 //    DatabaseNavigator databaseNavigator;
 //        public DatabaseNavigator getDatabaseNavigator() {

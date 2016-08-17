@@ -29,6 +29,11 @@ public class DataInputActivity extends DefaultActivity {
         setName("Data Input");
     }
 
+    @Override
+    public boolean isQueuingEnabled() {
+        return true;
+    }
+
     String inputTable;
         @Face(
                 faceClass=TableSelector.class,
@@ -204,6 +209,8 @@ public class DataInputActivity extends DefaultActivity {
         System.out.println("Main Selected Value is "+dsSelectMap.get("mainSelectBox"));
         System.out.println("Sub Single Selected Value is " +dsSelectMap.get("subSelectBox"));
         System.out.println("================= Dynamic Single Select Values End===============");
+
+        super.executeActivity(instance);
     }
 
 }
