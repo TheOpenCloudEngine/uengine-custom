@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class RadarChart {
 
-    public RadarChart(List<String> labels, List<DataSet> dataSets) {
+    public RadarChart() {
 
         String[] labelArray = {"Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"};
         setLabels(new ArrayList<String>());
