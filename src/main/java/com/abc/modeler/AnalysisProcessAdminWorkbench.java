@@ -1,5 +1,6 @@
 package com.abc.modeler;
 
+import com.abc.widget.RadarChart;
 import org.uengine.processadmin.ProcessAdminWorkbench;
 
 /**
@@ -12,9 +13,20 @@ public class AnalysisProcessAdminWorkbench extends ProcessAdminWorkbench {
 
         super();
 
-        setResourceNavigator(new AnalysisResourceNavigator());
+        setRadarChart(new RadarChart());
+
+        //setResourceNavigator(new AnalysisResourceNavigator());
 
     }
+
+    RadarChart radarChart;
+        public RadarChart getRadarChart() {
+            return radarChart;
+        }
+        public void setRadarChart(RadarChart radarChart) {
+            this.radarChart = radarChart;
+        }
+
 
 
 //
