@@ -1,17 +1,14 @@
-     <div class="ui-layout-west" style="padding: 20px 0">
-		 <div>
-			 <div style="height:45%">
-				 <h1>Structure View</h1>
-				 <%=fields.resourceNavigator.here()%>
-			 </div>
-			 <div style="height:45%;margin-top:50px">
-				 <h1>Table View</h1>
-				 <%=fields.radarChart.here()%>
-			 </div>
-		 </div>
+<div class="ui-layout-west" style="padding: 20px 0">
+		<div style="height:45%">
+					<h1>Subject</h1>
+                  	<%=fields.resourceNavigator.here()%>
+		</div>
+		<div style="height:45%;margin-top:50px">
+        			<h1>Data</h1>
+                    <%=fields.databaseNavigator.here()%>
+        </div>
 
       </div>
-
       <div class="ui-layout-center" style="padding: 20px 0">
       	<div style="overflow: auto; position:relative; height: 100%">
       		<%=fields.editorPanel.here()%>

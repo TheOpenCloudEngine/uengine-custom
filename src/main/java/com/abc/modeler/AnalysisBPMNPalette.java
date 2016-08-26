@@ -37,13 +37,17 @@ public class AnalysisBPMNPalette extends BPMNPalette{
         /**
          * processVariablePalette
          */
+        this.processVariablePalette = new ProcessVariablePalette();
 
         List<Palette> palettes = new ArrayList<>();
         palettes.add(bpmnPaletteWindow);
-
-        palettes.add(getProcessVariablePalette());
-
-        //palettes.add(processVariablePalette);
+        palettes.add(this.processVariablePalette);
         setChildPalettes(palettes);
     }
+
+    ProcessVariablePalette processVariablePalette;
+        public ProcessVariablePalette getProcessVariablePalette() {
+            return this.processVariablePalette;
+        }
+        public void setProcessVariablePalette(ProcessVariablePalette processVariablePalette) { this.processVariablePalette = processVariablePalette; }
 }
