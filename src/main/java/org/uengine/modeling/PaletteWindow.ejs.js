@@ -214,5 +214,4 @@ var org_uengine_modeling_PaletteWindow = function (objectId, className) {
     });
     bindRemoveEvent(container);
 
-    this.objectDiv.css({ height: auto});
 };
