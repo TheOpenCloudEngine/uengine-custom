@@ -41,7 +41,7 @@ public class RadarChart {
         dataSetOne.setPointHoverBackgroundColor("#fff");
         dataSetOne.setPointHoverBorderColor("rgba(179,181,198,1)");
         dataSetOne.setData(new ArrayList<Integer>());
-        Integer[] dataOneArray = {28, 48, 40, 19, 96, 27,100};
+        Integer[] dataOneArray = {65, 59, 90, 81, 56, 55, 40};
         for(Integer intValue: dataOneArray) {
             dataSetOne.getData().add(intValue);
         }
