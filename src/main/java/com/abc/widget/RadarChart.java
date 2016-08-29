@@ -16,8 +16,7 @@ public class RadarChart {
             getLabels().add(label);
         }
 
-        setDataSets(new ArrayList<DataSet>());
-
+        setDatasets(new ArrayList<DataSet>());
         /*
         label: "My First dataset",
         backgroundColor: "rgba(179,181,198,0.2)",
@@ -28,7 +27,6 @@ public class RadarChart {
         pointHoverBorderColor: "rgba(179,181,198,1)",
         data: [65, 59, 90, 81, 56, 55, 40]
         */
-
         DataSet dataSetOne = new DataSet();
         dataSetOne.setLabel("My First dataSet");
         dataSetOne.setBackgroundColor("rgba(179,181,198,0.2)");
@@ -38,11 +36,10 @@ public class RadarChart {
         dataSetOne.setPointHoverBackgroundColor("#fff");
         dataSetOne.setPointHoverBorderColor("rgba(179,181,198,1)");
         dataSetOne.setData(new ArrayList<Integer>());
-        Integer[] dataOneArray = {28, 48, 40, 19, 96, 27,100};
+        Integer[] dataOneArray = {65, 59, 90, 81, 56, 55, 40};
         for(Integer intValue: dataOneArray) {
             dataSetOne.getData().add(intValue);
         }
-
         /*
         label: "My Second dataset",
         backgroundColor: "rgba(255,99,132,0.2)",
@@ -64,17 +61,21 @@ public class RadarChart {
         dataSetTwo.setData(new ArrayList<Integer>());
         Integer[] dataTwoArray = {28, 48, 40, 19, 96, 27, 100};
         for(Integer intValue: dataTwoArray) {
-            dataSetOne.getData().add(intValue);
+            dataSetTwo.getData().add(intValue);
         }
+
+        getDatasets().add(dataSetOne);
+        getDatasets().add(dataSetTwo);
+
     }
 
     List<String> labels;
-        public List<String> getLabels() { return labels; }
-        public void setLabels(List<String> labels) { this.labels = labels; }
+    public List<String> getLabels() { return labels; }
+    public void setLabels(List<String> labels) { this.labels = labels; }
 
-    List<DataSet> dataSets;
-        public List<DataSet> getDataSets() { return dataSets; }
-        public void setDataSets(List<DataSet> dataSets) { this.dataSets = dataSets; }
+    List<DataSet> datasets;
+    public List<DataSet> getDatasets() { return datasets; }
+    public void setDatasets(List<DataSet> datasets) { this.datasets = datasets; }
 
 
 

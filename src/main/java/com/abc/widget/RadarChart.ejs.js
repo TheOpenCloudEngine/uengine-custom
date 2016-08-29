@@ -1,4 +1,10 @@
-var com_abc_widget_RadarChart = function(objId, className) {
+mw3.importScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js");
+
+
+
+
+var com_abc_widget_RadarChart = function(objId, className){
+
 
     var value = mw3.objects[objId];
 
@@ -9,12 +15,15 @@ var com_abc_widget_RadarChart = function(objId, className) {
         data: value,
         options: {
             scale: {
-                reverse: true,
+                reverse: false,
                 ticks: {
                     beginAtZero: true
                 }
             }
         }
     });
+
+
+
 
 }
