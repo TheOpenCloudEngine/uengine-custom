@@ -15,7 +15,7 @@ var com_abc_widget_RadarChart = function(objId, className){
         data: value,
         options: {
             scale: {
-                reverse: true,
+                reverse: false,
                 ticks: {
                     beginAtZero: true
                 }
