@@ -1,9 +1,9 @@
 package com.abc.modeler;
 
+import com.abc.widget.Accordion;
 import org.springframework.stereotype.Component;
-import org.uengine.modeling.CompositePalette;
 import org.uengine.modeling.Palette;
-import org.uengine.modeling.PaletteWindow;
+import com.abc.widget.StickWindow;
 import org.uengine.modeling.modeler.palette.*;
 
 import java.util.ArrayList;
@@ -18,29 +18,36 @@ public class AnalysisBPMNPalette extends BPMNPalette{
     public AnalysisBPMNPalette() {
         super();
 
-        CompositePalette bpmnPaletteWindow = new PaletteWindow();
-        /**
-         * BPMN
-         */
-        bpmnPaletteWindow.addPalette(new EventPalette());
-        bpmnPaletteWindow.addPalette(new TaskPalette());
-        bpmnPaletteWindow.addPalette(new GatewayPalette());
+        StickWindow paletteWindow = new StickWindow();
 
-        /**
-         * Dp, Sp
-         */
-        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
-        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
+        paletteWindow.setName("Palette");
 
-        bpmnPaletteWindow.setName("Analysis");
+        Accordion accordion = new Accordion();
+        paletteWindow.setPanel(accordion);
 
+
+//        /**
+//         * BPMN
+//         */
+//        bpmnPaletteWindow.addPalette(new EventPalette());
+//        bpmnPaletteWindow.addPalette(new TaskPalette());
+//        bpmnPaletteWindow.addPalette(new GatewayPalette());
+//
+//        /**
+//         * Dp, Sp
+//         */
+//        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
+//        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
+//
+//        bpmnPaletteWindow.setName("Analysis");
+//
         /**
          * processVariablePalette
          */
         this.processVariablePalette = new ProcessVariablePalette();
 
         List<Palette> palettes = new ArrayList<>();
-        palettes.add(bpmnPaletteWindow);
+        palettes.add(paletteWindow);
         palettes.add(this.processVariablePalette);
         setChildPalettes(palettes);
     }

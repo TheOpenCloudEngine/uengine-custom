@@ -22,6 +22,9 @@ public class DataSet {
     List<Integer> data;
 
 
+    String backgroundColor;
+
+
     public String getLabel() {
         return label;
     }
@@ -37,4 +40,13 @@ public class DataSet {
     public void setData(List<Integer> data) {
         this.data = data;
     }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
 }

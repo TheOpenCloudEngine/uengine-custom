@@ -1,11 +1,7 @@
-xxxxxxx
-
 
 <%
 if (value != null) {
     var groups = [];
-
-//var objectMetadata = mw3.getMetadata(value.__className);
 
     $.each(objectMetadata.fieldDescriptors, function(index, field){
         if(fields && (mw3.isHidden(fields[field.name]) || field.name == 'metaworksContext')){

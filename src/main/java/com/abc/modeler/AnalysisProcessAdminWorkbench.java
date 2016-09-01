@@ -1,6 +1,8 @@
 package com.abc.modeler;
 
 import com.abc.modeler.dbnavigator.DatabaseNavigator;
+import com.abc.widget.Accordion;
+import org.uengine.modeling.resource.DefaultResource;
 import org.uengine.modeling.resource.Workbench;
 import org.uengine.processadmin.ProcessAdminResourceNavigator;
 import org.uengine.processadmin.RecentEditedResourcesPanel;
@@ -15,20 +17,23 @@ public class AnalysisProcessAdminWorkbench extends Workbench {
 
         super(new ProcessAdminResourceNavigator());
 
+        ((DefaultResource)getResourceNavigator().getRoot()).setDisplayName("SK 하이닉스");
+
         try {
             setEditorPanel(new RecentEditedResourcesPanel(getResourceNavigator()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     DatabaseNavigator databaseNavigator;
-    public DatabaseNavigator getDatabaseNavigator() {
-        return new DatabaseNavigator();
-    }
-    public void setDatabaseNavigator(DatabaseNavigator databaseNavigator) {
-        this.databaseNavigator = databaseNavigator;
-    }
+        public DatabaseNavigator getDatabaseNavigator() {
+            return new DatabaseNavigator();
+        }
+        public void setDatabaseNavigator(DatabaseNavigator databaseNavigator) {
+            this.databaseNavigator = databaseNavigator;
+        }
 
 
 //

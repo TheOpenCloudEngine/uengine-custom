@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="lib/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="lib/jquery-ui-1.11.0.custom/jquery-ui.js"></script>
 	<script type="text/javascript" src="lib/jquery/jquery.layout-latest.js"></script>
-    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.js"></script>
 
 	<!--<script type="text/javascript" src="scripts/jquery/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery-ui-1.8.23.custom.min.js"></script>
@@ -31,15 +31,10 @@
 	<script type="text/javascript" src="scripts/jquery/jqueryCycle/jquery.cycle2.carousel.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jqueryCycle/jquery.cycle2.center.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.center.js"></script>
-    <script type="text/javascript" src="scripts/jquery/jquery.msg.js"></script>
-    <script type='text/javascript' src='scripts/jquery/jquery.textPlaceholder.js'></script>
+	<script type="text/javascript" src="scripts/jquery/jquery.msg.js"></script>
+	<script type='text/javascript' src='scripts/jquery/jquery.textPlaceholder.js'></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.jqote2.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.smartTab.js"></script>
-
-
-	<!-- jQuery Mobile -->
-	<link rel="stylesheet" type="text/css" href="scripts/jquery/jquery.mobile-1.0.1.min.css"/>
-	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.0.1.min.js”>
 
 
 	<!-- full calendar -->
@@ -62,7 +57,6 @@
 
 	<!-- chart -->
 	<script type='text/javascript' src='http://www.chartjs.org/assets/Chart.js'></script>
-	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js'></script>
 
 
 
@@ -96,7 +90,8 @@
 	<!-- metaworks3 engine -->
 	<script type="text/javascript" src="dwr/metaworks/scripts/metaworks.js"></script>
 
-	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1-SNAPSHOT.js"></script>
+	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.1-SNAPSHOT.js"></script>
+	<!--<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1-SNAPSHOT.js"></script>-->
 
 	<!-- init -->
 	<link rel="stylesheet" type="text/css" href="style/tree.css" />
@@ -118,7 +113,9 @@
 	<link href="assets/css/plugins.css" rel="stylesheet">
 	<link href="assets/css/style.min.css" rel="stylesheet">
 	<link href="#" rel="stylesheet" id="theme-color">
+	<link rel="stylesheet" href="assets/css/bootstrap-multiselect.css" type="text/css"/>
 	<!-- END  MANDATORY STYLE -->
+
 
 	<!-- BEGIN PAGE LEVEL STYLE -->
 	<link href="assets/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
@@ -187,12 +184,20 @@
 	<!-- mw3 component -->
 	<!-- <link rel="stylesheet" type="text/css" href="style/uclipse.css" /> -->
 
-	<!-- for open presentation -->
-	<link rel="stylesheet" type="text/css" href="scripts/presentation/jmpressStyle.css" />
-	<script type="text/javascript" src="scripts/presentation/jmpress.all.js"></script>
-
 	<script src="scripts/ace-1.1.0/build/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="scripts/ace-1.1.0/build/src-noconflict/ext-static_highlight.js"></script>
+
+	<!-- boostrap multi-select -->
+	<script type="text/javascript" src="assets/js/bootstrap-multiselect.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="style/essencia.css">
+	<!-- datatables -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+
+	<!-- billing plan css -->
+	<link rel="stylesheet" type="text/css" href="style/plan/plan.css" />
 
 	<style>
 		html,
@@ -295,6 +300,9 @@
 		}
 
 		$(document).ready(function() {
+
+			mw3.checkUpdates();
+
 			document.body.addEventListener("DOMNodeInserted", function (ev) {
 				//console.log('DOMNodeInserted');
 				//console.log(ev);
@@ -482,7 +490,7 @@
 				var runner = new MetaworksObject({
 					__className : "org.uengine.codi.mw3.Runner",
 					projectId : projectId,
-					className : className
+					className : classNameRunner
 				}, 'body');
 
 				runner.run();
@@ -518,11 +526,12 @@
 			};
 
 			mw3.onLoadFaceHelperScript();
+
 		});
 	</script>
 </head>
 
-<body onload="dwr.engine.setActiveReverseAjax(true);">
+<body onload="dwr.engine.setActiveReverseAjax(true);dwr.engine.setNotifyServerOnPageUnload(true);">
 <div class="error_div"></div>
 </body>
 </html>
