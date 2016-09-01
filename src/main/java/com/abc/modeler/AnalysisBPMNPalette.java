@@ -1,6 +1,7 @@
 package com.abc.modeler;
 
 import com.abc.widget.Accordion;
+import com.abc.widget.JsTree;
 import org.springframework.stereotype.Component;
 import org.uengine.modeling.Palette;
 import com.abc.widget.StickWindow;
@@ -22,7 +23,8 @@ public class AnalysisBPMNPalette extends BPMNPalette{
 
         paletteWindow.setName("Palette");
 
-        Accordion accordion = new Accordion();
+
+        JsTree accordion = new JsTree();
         paletteWindow.setPanel(accordion);
 
 

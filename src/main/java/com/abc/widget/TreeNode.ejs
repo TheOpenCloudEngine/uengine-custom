@@ -1,0 +1,24 @@
+<!--replace-->
+
+<li Id="objDiv_<%=objectId%>">
+
+    <%=value.name%>
+
+    <%
+    if(value.childNode){
+
+    %><ul>
+        <%=fields.childNode.here()%>
+    </ul><%
+    }
+
+    %>
+
+</li>
+
+
+
+
+
+
+
