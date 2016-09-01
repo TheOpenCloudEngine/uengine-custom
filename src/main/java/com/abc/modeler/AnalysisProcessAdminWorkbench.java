@@ -17,7 +17,7 @@ public class AnalysisProcessAdminWorkbench extends Workbench {
 
         super(new ProcessAdminResourceNavigator());
 
-        ((DefaultResource)getResourceNavigator().getRoot()).setDisplayName("SK ÇÏÀÌ´Ğ½º");
+        ((DefaultResource)getResourceNavigator().getRoot()).setDisplayName("SK í•˜ì´ë‹‰ìŠ¤");
 
         try {
             setEditorPanel(new RecentEditedResourcesPanel(getResourceNavigator()));
