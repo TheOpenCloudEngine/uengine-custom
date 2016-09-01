@@ -3,7 +3,7 @@ package com.abc.widget;
 import java.util.List;
 
 /**
- * Created by kimsh on 2016. 8. 25..
+ * Created by jjy on 2016. 8. 25..
  */
 public class DataSet {
 //
