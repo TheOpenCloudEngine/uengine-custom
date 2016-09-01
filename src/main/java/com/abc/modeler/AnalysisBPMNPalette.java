@@ -3,8 +3,10 @@ package com.abc.modeler;
 import com.abc.widget.Accordion;
 import com.abc.widget.JsTree;
 import org.springframework.stereotype.Component;
+import org.uengine.modeling.CompositePalette;
 import org.uengine.modeling.Palette;
 import com.abc.widget.StickWindow;
+import org.uengine.modeling.PaletteWindow;
 import org.uengine.modeling.modeler.palette.*;
 
 import java.util.ArrayList;
@@ -21,28 +23,29 @@ public class AnalysisBPMNPalette extends BPMNPalette{
 
         StickWindow paletteWindow = new StickWindow();
 
-        paletteWindow.setName("Palette");
+        paletteWindow.setName("JsTreePalette");
 
 
         JsTree accordion = new JsTree();
         paletteWindow.setPanel(accordion);
 
+        CompositePalette bpmnPaletteWindow = new PaletteWindow();
 
-//        /**
-//         * BPMN
-//         */
-//        bpmnPaletteWindow.addPalette(new EventPalette());
-//        bpmnPaletteWindow.addPalette(new TaskPalette());
-//        bpmnPaletteWindow.addPalette(new GatewayPalette());
-//
-//        /**
-//         * Dp, Sp
-//         */
-//        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
-//        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
-//
-//        bpmnPaletteWindow.setName("Analysis");
-//
+        /**
+         * Dp, Sp
+         */
+        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
+        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
+
+        /**
+         * BPMN
+         */
+        bpmnPaletteWindow.addPalette(new EventPalette());
+        bpmnPaletteWindow.addPalette(new TaskPalette());
+        bpmnPaletteWindow.addPalette(new GatewayPalette());
+
+        bpmnPaletteWindow.setName("Palette");
+
         /**
          * processVariablePalette
          */
@@ -50,6 +53,7 @@ public class AnalysisBPMNPalette extends BPMNPalette{
 
         List<Palette> palettes = new ArrayList<>();
         palettes.add(paletteWindow);
+        palettes.add(bpmnPaletteWindow);
         palettes.add(this.processVariablePalette);
         setChildPalettes(palettes);
     }
