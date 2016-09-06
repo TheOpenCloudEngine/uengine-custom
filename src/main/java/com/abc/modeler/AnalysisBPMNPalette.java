@@ -3,6 +3,7 @@ package com.abc.modeler;
 import com.abc.widget.Accordion;
 import com.abc.widget.JsTree;
 import org.springframework.stereotype.Component;
+import org.uengine.modeling.CompositePalette;
 import org.uengine.modeling.Palette;
 import com.abc.widget.StickWindow;
 import org.uengine.modeling.PaletteWindow;
@@ -20,15 +21,21 @@ public class AnalysisBPMNPalette extends BPMNPalette{
     public AnalysisBPMNPalette() {
         super();
 
-        //StickWindow paletteWindow = new StickWindow();
+        StickWindow paletteWindow = new StickWindow();
 
-        //paletteWindow.setName("Palette");
+        paletteWindow.setName("JsTreePalette");
 
 
-//        JsTree accordion = new JsTree();
-//        paletteWindow.setPanel(accordion);
+        JsTree accordion = new JsTree();
+        paletteWindow.setPanel(accordion);
 
-        PaletteWindow bpmnPaletteWindow = new PaletteWindow();
+        CompositePalette bpmnPaletteWindow = new PaletteWindow();
+
+        /**
+         * Dp, Sp
+         */
+        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
+        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
 
         /**
          * BPMN
@@ -37,14 +44,7 @@ public class AnalysisBPMNPalette extends BPMNPalette{
         bpmnPaletteWindow.addPalette(new TaskPalette());
         bpmnPaletteWindow.addPalette(new GatewayPalette());
 
-        /**
-         * Dp, Sp
-         */
-        bpmnPaletteWindow.addPalette(new DataProcessingPalette());
-        bpmnPaletteWindow.addPalette(new StatisticProcessingPalette());
-
-        bpmnPaletteWindow.setName("Analysis");
-
+        bpmnPaletteWindow.setName("Palette");
 
         /**
          * processVariablePalette
@@ -52,6 +52,7 @@ public class AnalysisBPMNPalette extends BPMNPalette{
         this.processVariablePalette = new ProcessVariablePalette();
 
         List<Palette> palettes = new ArrayList<>();
+        palettes.add(paletteWindow);
         palettes.add(bpmnPaletteWindow);
         palettes.add(this.processVariablePalette);
         setChildPalettes(palettes);
