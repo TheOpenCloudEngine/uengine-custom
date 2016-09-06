@@ -8,12 +8,14 @@ import com.abc.face.DynamicSelectBoxWithMultiFace;
 import com.abc.face.DynamicSelectBoxWithSingleFace;
 import com.abc.face.ParameterValueListFace;
 import com.abc.face.ParameterVariable;
+import com.abc.widget.ComputeTable;
 import org.metaworks.EventContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ValidationContext;
+import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class DataInputActivity extends DefaultActivity {
     public DataInputActivity() {
         super();
         setName("Data Input");
+        setComputeTable(new ComputeTable());
     }
 
     @Override
@@ -35,19 +38,19 @@ public class DataInputActivity extends DefaultActivity {
     }
 
     String inputTable;
-        @Face(
-                faceClass=TableSelector.class,
-                displayName = "인풋 테이블명"
-        )
+//        @Face(
+//                faceClass=TableSelector.class,
+//                displayName = "인풋 테이블명"
+//        )
         @Order(2)
         public String getInputTable() { return inputTable; }
         public void setInputTable(String inputTable) { this.inputTable = inputTable; }
 
     String outputTable;
-        @Face(
-                faceClass=TableSelector.class,
-                displayName = "아웃풋 테이블명"
-        )
+//        @Face(
+//                faceClass=TableSelector.class,
+//                displayName = "아웃풋 테이블명"
+//        )
         @Order(3)
         public String getOutputTable() { return outputTable; }
         public void setOutputTable(String outputTable) { this.outputTable = outputTable; }
@@ -126,10 +129,18 @@ public class DataInputActivity extends DefaultActivity {
         public Map<String, List<String>> getDynamicSelectBoxWithSingle() { return dynamicSelectBoxWithSingle; }
         public void setDynamicSelectBoxWithSingle(Map<String, List<String>> dynamicSelectBoxWithSingle) { this.dynamicSelectBoxWithSingle = dynamicSelectBoxWithSingle; }
 
+
+    ComputeTable computeTable;
+        public ComputeTable getComputeTable() {
+            return computeTable;
+        }
+        public void setComputeTable(ComputeTable computeTable) {
+            this.computeTable = computeTable;
+        }
+
+
+
     String inputValue;
-        @Face(
-                displayName = "인풋박스"
-        )
         @Order(11)
         public String getInputValue() { return inputValue; }
         public void setInputValue(String inputValue) { this.inputValue = inputValue; }
@@ -152,8 +163,8 @@ public class DataInputActivity extends DefaultActivity {
 
         ValidationContext validationContext =  super.validate(options);
 
-        if(getInputValue()==null){
-            validationContext.addWarning("Input Value must be set.");
+        if(!UEngineUtil.isNotEmpty(getInputValue())){
+            validationContext.addWarning("입력 값은 필수값입니다.");
         }
 
         return validationContext;
@@ -170,8 +181,8 @@ public class DataInputActivity extends DefaultActivity {
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
-        System.out.println("inputTable Value is " + getInputTable());
-        System.out.println("outputTable Value is " + getOutputTable());
+        System.out.println("inputTable Value is " + evaluateContent(instance, getInputTable()));
+        System.out.println("outputTable Value is " + evaluateContent(instance, getInputTable()));
         System.out.println("================= outputColumn Values===============");
         int outputColumnIdx = 1;
         for(String outputColumn : getOutputColumn()) {
@@ -212,5 +223,7 @@ public class DataInputActivity extends DefaultActivity {
 
         super.executeActivity(instance);
     }
+
+
 
 }
