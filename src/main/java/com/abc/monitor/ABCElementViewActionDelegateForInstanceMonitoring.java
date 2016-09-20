@@ -43,7 +43,17 @@ public class ABCElementViewActionDelegateForInstanceMonitoring extends ElementVi
         TaskAttributes taskAttributes = context.getBean(TaskAttributes.class);
 
         if (elementView instanceof AnalysisActivityView) {
-            MetaworksRemoteService.wrapReturn(new ModalWindow(new IFrame("/data/ssh/" + getInstanceId()), elementView.getElement().getDescription()));
+
+            IFrame iFrame = new IFrame();
+            iFrame.setSrc("/test/test.do");
+            iFrame.setHeight("600px");
+            iFrame.setWidth("500px");
+
+            ModalWindow modal = new ModalWindow(iFrame, elementView.getElement().getDescription());
+            modal.setHeight(600);
+            modal.setWidth(500);
+            MetaworksRemoteService.wrapReturn(modal);
+            //MetaworksRemoteService.wrapReturn(new ModalWindow(new IFrame("/data/ssh/" + getInstanceId()), elementView.getElement().getDescription()));
 
         } else if (elementView instanceof HiveActivityView
                 || elementView instanceof SparkActivityView

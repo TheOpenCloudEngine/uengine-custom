@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+
+       xmlns:int="http://www.springframework.org/schema/integration"
+
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       ">
+
+
+    <context:component-scan base-package="com.abc" />
+
+    <util:properties id="config" location="classpath:org/uengine/uengine.properties"/>
+
+    <!-- ========================= REST DEFINITION ========================= -->
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="defaultContentType" value="application/json"/>
+        <property name="favorPathExtension" value="true"/>
+        <property name="favorParameter" value="false"/>
+        <property name="parameterName" value="type"/>
+        <property name="ignoreAcceptHeader" value="false"/>
+        <property name="useJaf" value="false"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+        <property name="viewResolvers">
+            <list>
+                <ref bean="internalResourceViewResolver"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ========================= VIEW RESOLVER DEFINITION ========================= -->
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- ========================= MESSAGE CONVERTER DEFINITION ========================= -->
+
+    <bean id="jsonMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="application"/>
+        <constructor-arg value="json"/>
+    </bean>
+
+    <bean id="xmlMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="application"/>
+        <constructor-arg value="xml"/>
+    </bean>
+
+    <bean id="stringMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="text"/>
+        <constructor-arg value="plain"/>
+    </bean>
+
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <util:list>
+                <ref bean="jsonMediaType"/>
+            </util:list>
+        </property>
+        <property name="prettyPrint" value="true"/>
+        <property name="objectMapper" ref="jacksonObjectMapper"/>
+    </bean>
+
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg type="java.nio.charset.Charset">
+            <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                <property name="staticMethod" value="java.nio.charset.Charset.forName"/>
+                <property name="arguments">
+                    <list>
+                        <!-- Set Default Charset -->
+                        <bean class="java.lang.String">
+                            <constructor-arg value="UTF-8"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </constructor-arg>
+
+        <property name="supportedMediaTypes">
+            <util:list>
+                <ref bean="jsonMediaType"/>
+                <ref bean="stringMediaType"/>
+            </util:list>
+        </property>
+    </bean>
+
+    <!-- ========================= EXCEPTION RESOLVER DEFINITION ========================= -->
+
+    <bean id="exceptionResolverComposite"
+          class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite">
+        <property name="exceptionResolvers">
+            <list>
+                <bean id="exceptionResolver"
+                      class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+                    <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+                </bean>
+            </list>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+
+    <!-- ========================= JACKSON OBJECT MAPPER DEFINITION ========================= -->
+    <bean id="jacksonObjectMapper" class="org.uengine.web.util.ObjectMapperFactoryBean">
+        <property name="indentOutput" value="true"/>
+    </bean>
+</beans>
