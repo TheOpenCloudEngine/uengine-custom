@@ -78,6 +78,11 @@
             <version>11.1.0.7.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>essencia-jira</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 
