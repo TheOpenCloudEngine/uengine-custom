@@ -6,11 +6,13 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Range;
 import org.metaworks.annotation.ServiceMethod;
 
+import java.io.Serializable;
+
 /**
  * Created by jjy on 2016. 9. 1..
  */
 @Face(ejsPathForArray = "dwr/metaworks/genericfaces/CleanArrayFace.ejs")
-public class ComputeTableRow {
+public class ComputeTableRow implements Serializable{
 
     String column;
         public String getColumn() {

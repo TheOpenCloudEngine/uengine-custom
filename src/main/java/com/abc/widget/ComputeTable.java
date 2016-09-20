@@ -5,13 +5,14 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Range;
 import org.metaworks.annotation.ServiceMethod;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jjy on 2016. 9. 1..
  */
-public class ComputeTable implements ContextAware{
+public class ComputeTable implements ContextAware, Serializable{
 
    List<ComputeTableRow> computeTableRowList;
 

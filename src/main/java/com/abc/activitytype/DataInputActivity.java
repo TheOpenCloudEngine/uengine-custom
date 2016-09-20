@@ -12,6 +12,8 @@ import com.abc.widget.ComputeTable;
 import org.metaworks.EventContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ValidationContext;
@@ -32,9 +34,21 @@ public class DataInputActivity extends DefaultActivity {
         setComputeTable(new ComputeTable());
     }
 
+    @AutowiredFromClient
+    public Session session;
+        public Session getSession() {
+            return session;
+        }
+        public void setSession(Session session) {
+            this.session = session;
+        }
+
+
+
+
     @Override
     public boolean isQueuingEnabled() {
-        return true;
+        return false;
     }
 
     String inputTable;
@@ -181,10 +195,16 @@ public class DataInputActivity extends DefaultActivity {
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
+
+
+        System.out.println("User info is " + instance.getProperty("","initUserId"));
+
+
         System.out.println("inputTable Value is " + evaluateContent(instance, getInputTable()));
         System.out.println("outputTable Value is " + evaluateContent(instance, getInputTable()));
         System.out.println("================= outputColumn Values===============");
         int outputColumnIdx = 1;
+        if(getOutputColumn()!=null)
         for(String outputColumn : getOutputColumn()) {
             System.out.println(outputColumnIdx+"번째 [outputColumn Value] : " + outputColumn);
             outputColumnIdx++;
@@ -192,6 +212,8 @@ public class DataInputActivity extends DefaultActivity {
         System.out.println("================= FilterInformation End ===============");
         System.out.println("================= FilterInformation Values===============");
         int filterIdx = 1;
+
+        if(getFilterInformation()!=null)
         for(FilterInformation filter : getFilterInformation()) {
             System.out.println(filterIdx+"번째 [FieldName] : " + filter.getFieldName() + ", [Operator] : " + filter.getOperator() + ", [Value] : "+filter.getValue());
             filterIdx++;
@@ -199,6 +221,8 @@ public class DataInputActivity extends DefaultActivity {
         System.out.println("================= FilterInformation End ===============");
         System.out.println("================= ParameterVariable Values===============");
         int paramIdx = 1;
+
+        if(getParameterValueList()!=null)
         for(ParameterVariable paramVar : getParameterValueList()) {
             System.out.println(paramIdx+"번째 [paramVar] : " + paramVar.getParameter());
             filterIdx++;

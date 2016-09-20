@@ -2,10 +2,10 @@ var org_uengine_social_InstanceMonitorPanel = function(objectId, className){
 
 
 
-        setTimeout(function(){
-                var object = mw3.objects[objectId];
-                object.refresh();
-        }, 3000);
+        //setTimeout(function(){
+        //        var object = mw3.objects[objectId];
+        //        object.refresh();
+        //}, 3000);
 
 };
 
