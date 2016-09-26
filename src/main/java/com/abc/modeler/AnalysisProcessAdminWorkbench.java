@@ -15,7 +15,7 @@ public class AnalysisProcessAdminWorkbench extends Workbench {
 
     public AnalysisProcessAdminWorkbench() {
 
-        super(new ProcessAdminResourceNavigator());
+        super(new SubjectExplorer());
 
         ((DefaultResource)getResourceNavigator().getRoot()).setDisplayName("SK 하이닉스");
 
