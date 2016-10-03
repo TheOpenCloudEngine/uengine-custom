@@ -16,6 +16,7 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.ValidationContext;
 import org.uengine.util.UEngineUtil;
 
@@ -153,6 +154,14 @@ public class DataInputActivity extends DefaultActivity {
         }
 
 
+    ProcessVariable outValue;
+        public ProcessVariable getOutValue() {
+            return outValue;
+        }
+        public void setOutValue(ProcessVariable outValue) {
+            this.outValue = outValue;
+        }
+
 
     String inputValue;
         @Order(11)
@@ -244,6 +253,9 @@ public class DataInputActivity extends DefaultActivity {
         System.out.println("Main Selected Value is "+dsSelectMap.get("mainSelectBox"));
         System.out.println("Sub Single Selected Value is " +dsSelectMap.get("subSelectBox"));
         System.out.println("================= Dynamic Single Select Values End===============");
+
+
+        getOutValue().set(instance, "", "output of " + instance.getName() + ":" + getInputValue());
 
         super.executeActivity(instance);
     }
