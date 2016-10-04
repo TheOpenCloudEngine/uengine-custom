@@ -14,10 +14,8 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
-import org.uengine.kernel.DefaultActivity;
-import org.uengine.kernel.ProcessInstance;
-import org.uengine.kernel.ProcessVariable;
-import org.uengine.kernel.ValidationContext;
+import org.uengine.kernel.*;
+import org.uengine.kernel.bpmn.SequenceFlow;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
@@ -205,8 +203,16 @@ public class DataInputActivity extends DefaultActivity {
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
+        for (SequenceFlow sequenceFlow : getIncomingSequenceFlows()){
+            Activity prevActivity = sequenceFlow.getSourceActivity();
 
-        System.out.println("User info is " + instance.getProperty("","initUserId"));
+            if(prevActivity instanceof DataInputActivity){
+                System.out.println(((DataInputActivity) prevActivity).getOutValue());
+            }
+        }
+
+
+        System.out.println("User info is " + instance.getProperty("", "initUserId"));
 
 
         System.out.println("inputTable Value is " + evaluateContent(instance, getInputTable()));
@@ -261,5 +267,19 @@ public class DataInputActivity extends DefaultActivity {
     }
 
 
+    @Override
+    public void suspend(ProcessInstance instance) throws Exception {
+        stop(instance);
+    }
 
+    @Override
+    public void stop(ProcessInstance instance, String status) throws Exception {
+        super.stop(instance, status);
+
+
+        //logic for signaling stop to the job
+        // blah blah....
+
+
+    }
 }

@@ -4,8 +4,9 @@ var com_abc_modeler_SubjectExplorer = function(objectId, className){
     this.className = className;
     console.log(this);
     //draw tree
-    $('#objDiv_'+this.objectId).bind('click', function(){
-        console.log(this);
+    $('#objDiv_'+this.objectId).bind('click', function(e){
+
+        console.log(e);
     });
    /*
     var selectedResource = {

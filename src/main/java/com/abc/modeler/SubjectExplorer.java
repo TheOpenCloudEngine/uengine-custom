@@ -8,7 +8,10 @@ import org.uengine.processadmin.ProcessAdminResourceNavigator;
  */
 public class SubjectExplorer extends ProcessAdminResourceNavigator {
 
-
+    @ServiceMethod
+    public void refresh(){
+        load();
+    }
 
 
 }
