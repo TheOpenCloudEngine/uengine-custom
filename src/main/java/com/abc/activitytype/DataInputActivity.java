@@ -18,6 +18,7 @@ import org.uengine.kernel.DefaultActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.ValidationContext;
+import org.uengine.kernel.bpmn.face.ProcessVariableSelectorFace;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
@@ -153,15 +154,16 @@ public class DataInputActivity extends DefaultActivity {
             this.computeTable = computeTable;
         }
 
-
     ProcessVariable outValue;
+        @Face(
+                faceClass = ProcessVariableSelectorFace.class
+        )
         public ProcessVariable getOutValue() {
             return outValue;
         }
         public void setOutValue(ProcessVariable outValue) {
             this.outValue = outValue;
         }
-
 
     String inputValue;
         @Order(11)
@@ -185,11 +187,11 @@ public class DataInputActivity extends DefaultActivity {
 
 
         ValidationContext validationContext =  super.validate(options);
-
+/*
         if(!UEngineUtil.isNotEmpty(getInputValue())){
             validationContext.addWarning("입력 값은 필수값입니다.");
         }
-
+*/
         return validationContext;
     }
 
@@ -205,7 +207,7 @@ public class DataInputActivity extends DefaultActivity {
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
-
+/*
         System.out.println("User info is " + instance.getProperty("","initUserId"));
 
 
@@ -256,7 +258,7 @@ public class DataInputActivity extends DefaultActivity {
 
 
         getOutValue().set(instance, "", "output of " + instance.getName() + ":" + getInputValue());
-
+*/
         super.executeActivity(instance);
     }
 

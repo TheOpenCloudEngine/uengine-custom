@@ -24,7 +24,6 @@ public class DataProcessingPalette extends Palette {
         addSymbol((new CustomSQLActivityView()).createSymbol());
         addSymbol((new HiveActivityView()).createSymbol());
         addSymbol((new DataInputActivityView()).createSymbol());
-        addSymbol((new ProcVarListActivityView()).createSymbol());
     }
 
     public DataProcessingPalette(String type) {
