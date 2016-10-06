@@ -29,7 +29,7 @@ public class ProcessService {
 
     @Autowired
     @Qualifier("processManagerBeanForQueue")
-    ProcessManagerRemote pm;  //@Service ·Î ProcessService¸¦ ¼±¾ğÇÒ ½Ã¿¡´Â ÀÌ °ÍÀÌ Àç»ç¿ëµÇ¾î ¹®Á¦°¡ ¹ß»ıÇÑ´Ù.
+    ProcessManagerRemote pm;  //@Service ë¡œ ProcessServiceë¥¼ ì„ ì–¸í•  ì‹œì—ëŠ” ì´ ê²ƒì´ ì¬ì‚¬ìš©ë˜ì–´ ë¬¸ì œê°€ ë°œìƒí•œë‹¤.
 
     @Transactional
     public void runProcess(Map<String, String> paramMap) throws Exception{
