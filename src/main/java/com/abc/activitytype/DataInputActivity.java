@@ -16,6 +16,7 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.kernel.*;
 import org.uengine.kernel.bpmn.SequenceFlow;
+import org.uengine.kernel.bpmn.face.ProcessVariableSelectorFace;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
@@ -32,16 +33,6 @@ public class DataInputActivity extends DefaultActivity {
         setName("Data Input");
         setComputeTable(new ComputeTable());
     }
-
-    @AutowiredFromClient
-    public Session session;
-        public Session getSession() {
-            return session;
-        }
-        public void setSession(Session session) {
-            this.session = session;
-        }
-
 
 
 
@@ -152,7 +143,8 @@ public class DataInputActivity extends DefaultActivity {
         }
 
 
-    ProcessVariable outValue;
+    ProcessVariable outValue = new ProcessVariable();
+    @Face(faceClass = ProcessVariableSelectorFace.class)
         public ProcessVariable getOutValue() {
             return outValue;
         }
