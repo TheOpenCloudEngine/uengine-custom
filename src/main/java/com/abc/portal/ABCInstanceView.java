@@ -22,11 +22,17 @@ public class ABCInstanceView extends InstanceView {
 
         InstanceMonitorPanel instanceMonitorPanel = new InstanceMonitorPanel();
         try {
-            instanceMonitorPanel.load(new Long(getInstanceId()), processManager);
+
+            String instanceId = getInstanceId();
+
+            if(getExecutionScope()!=null)
+                instanceId = instanceId + "@" + getExecutionScope();
+
+            instanceMonitorPanel.load(instanceId, processManager);
 
             ABCInstanceViewDetail abcInstanceViewDetail = new ABCInstanceViewDetail();
             abcInstanceViewDetail.setInstanceMonitorPanel(instanceMonitorPanel);
-            abcInstanceViewDetail.setInstanceId(getInstanceId());
+            abcInstanceViewDetail.setInstanceId(instanceId);
 
             return abcInstanceViewDetail;
         } catch (Exception e) {

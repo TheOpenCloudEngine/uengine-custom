@@ -20,9 +20,11 @@ public class DataInputActivityView extends ActivityView {
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_POPUP)
     public Object showProperty(
-                @AutowiredFromClient(payload = "elementViewList[__className=='com.abc.activitytype.view.DataInputActivityView' && toEdge==value.fromEdge].element.outValue.name") Canvas canvas,
-                @AutowiredFromClient ProcessVariablePanel processVariablePanel,
-                @AutowiredFromClient Session session
+        @AutowiredFromClient(
+            payload = "elementViewList[__className=='com.abc.activitytype.view.DataInputActivityView' && toEdge==value.fromEdge].element.outValue.name"
+        ) Canvas canvas,
+        @AutowiredFromClient ProcessVariablePanel processVariablePanel,
+        @AutowiredFromClient Session session
     ) throws Exception {
 
         DataInputActivity dia = (DataInputActivity) getElement();

@@ -195,6 +195,8 @@ public class DataInputActivity extends DefaultActivity {
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
+       // if(true) throw new Exception("test");
+
         for (SequenceFlow sequenceFlow : getIncomingSequenceFlows()){
             Activity prevActivity = sequenceFlow.getSourceActivity();
 
