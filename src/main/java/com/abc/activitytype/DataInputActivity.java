@@ -195,7 +195,12 @@ public class DataInputActivity extends DefaultActivity {
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
 
-       // if(true) throw new Exception("test");
+        if(true){
+
+            instance.addDebugInfo("[Error] detailed error logs");
+
+            throw new Exception("Exception contents");
+        }
 
         for (SequenceFlow sequenceFlow : getIncomingSequenceFlows()){
             Activity prevActivity = sequenceFlow.getSourceActivity();
