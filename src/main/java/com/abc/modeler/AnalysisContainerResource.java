@@ -2,9 +2,12 @@ package com.abc.modeler;
 
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processadmin.ProcessAdminContainerResource;
 
 /**
@@ -40,4 +43,15 @@ public class AnalysisContainerResource extends ProcessAdminContainerResource{
             this.copyFromFolderPath = copyFromFolderPath;
         }
 
+
+    @ServiceMethod(target = ServiceMethod.TARGET_POPUP, inContextMenu = true)
+    public VersionManager versionManager() throws Exception {
+        VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
+
+        versionManager.load(this /* TODO: find root */);
+
+        MetaworksRemoteService.wrapReturn(new ModalWindow(versionManager, 400, 1000, "Version Manager"));
+
+        return versionManager;
+    }
 }

@@ -6,6 +6,8 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.modeling.resource.resources.ProcessResource;
 
+import java.io.IOException;
+
 /**
  * Created by jjy on 2016. 10. 10..
  */
@@ -24,4 +26,9 @@ public class ModelResource extends ProcessResource{
             this.newName = newName;
         }
 
+    @Override
+    @ServiceMethod(target=ServiceMethod.TARGET_NONE)
+    public void delete() throws IOException {
+        super.delete();
+    }
 }
