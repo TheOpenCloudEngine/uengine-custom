@@ -2,11 +2,12 @@
 
 <li id="objDiv_<%=objectId%>">
 
-<% if (value.object) { %>
-    <%=fields.object.here()%>
-<% } else { %>
-    <%=value.name%>
-<% } %>
+    <% if (value.object) { %>
+        <%=fields.object.here()%>
+    <% } else { %>
+        <%=value.name%>
+    <% } %>
+    
 <%
     if (value.childNode) {
 %>

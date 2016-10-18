@@ -21,13 +21,13 @@ public class AnalysisBPMNPalette extends BPMNPalette{
     public AnalysisBPMNPalette() {
         super();
 
-        StickWindow paletteWindow = new StickWindow();
+        //StickWindow paletteWindow = new StickWindow();
 
-        paletteWindow.setName("JsTreePalette");
+        //paletteWindow.setName("JsTreePalette");
 
 
-        JsTree accordion = new JsTree();
-        paletteWindow.setPanel(accordion);
+        //JsTree accordion = new JsTree();
+        //paletteWindow.setPanel(accordion);
 
         CompositePalette bpmnPaletteWindow = new PaletteWindow();
 
@@ -52,7 +52,7 @@ public class AnalysisBPMNPalette extends BPMNPalette{
         this.processVariablePalette = new ProcessVariablePalette();
 
         List<Palette> palettes = new ArrayList<>();
-        palettes.add(paletteWindow);
+        //palettes.add(paletteWindow);
         palettes.add(bpmnPaletteWindow);
         palettes.add(this.processVariablePalette);
         setChildPalettes(palettes);

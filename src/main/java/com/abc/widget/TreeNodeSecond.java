@@ -7,29 +7,29 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Name;
 
 @Face(ejsPathForArray="dwr/metaworks/genericfaces/ArrayFace_NoDiv.ejs")
-public class TreeNode {
+public class TreeNodeSecond {
 
-	public TreeNode() { }
-	public TreeNode(String name) { this.setName(name); }
+	public TreeNodeSecond() { }
+	public TreeNodeSecond(String name) { this.setName(name); }
 	
 	private String         name;
-	private List<TreeNodeSecond> childNode;
-	
+	private List<TreeNodeThird> childNode;
+
 	private TreeNode       parentNode;
 	private String         type;
 	private Object         object;
-	
+
 	private boolean        lastNode = false;;
-	
+
 	@Name
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 	
 	@Children
-	public List<TreeNodeSecond> getChildNode() { return childNode; }
-	public void setChildNode(List<TreeNodeSecond> childNode) { this.childNode = childNode; }
+	public List<TreeNodeThird> getChildNode() { return childNode; }
+	public void setChildNode(List<TreeNodeThird> childNode) { this.childNode = childNode; }
 
-	public TreeNode getParentNode() { return this.parentNode; }
+	public TreeNode getParentNode() { return parentNode; }
 	public void setParentNode(TreeNode parentNode) { this.parentNode = parentNode; }
 	
 	public String getType() { return type; }
@@ -40,34 +40,50 @@ public class TreeNode {
 	
 	public boolean isLastNode() { return lastNode; }
 	public void setLastNode(boolean lastNode) { this.lastNode = lastNode; }
-
+	
+//	@Face(displayName = "Data View")
+//    @ServiceMethod(inContextMenu = true, callByContent = true, target = ServiceMethodContext.TARGET_POPUP)
+//    public void dataView() throws Exception {
+//
+//		if (this.type.equals(NodeType.Table)) {
+//		
+//			TableResource tr = new TableResource(); 
+//			tr.setName(this.name);
+//			tr.setDbName(this.parentNode.getName());
+//			
+//	        ModalWindow popup = new ModalWindow(new DataViewList(tr), 700, 400);
+//	        popup.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+//	        popup.setTitle("Data View");
+//	        MetaworksRemoteService.wrapReturn(popup);
+//		}
+//    }    
+//
 //    @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_SELF)
 //    public void onNameClicked() {
 //
-//    	if (this.type.equals(NodeType.Database)) {
-//    		
-//        	List<Map<String, Object>> results = CommonFunction.getTableList(DBType.Hive, this.name);
+//    	if (this.type.equals(NodeType.Table)) {
 //
-//        	if (this.getChildNode() == null) this.setChildNode(new ArrayList<TreeNodeSecond>());
+//        	List<Map<String, Object>> results = CommonFunction.getColumnList(DBType.Hive, this.name, "dw_archive");
+//        	
+//        	if (this.getChildNode() == null) this.setChildNode(new ArrayList<TreeNodeThird>());
 //        	
 //        	this.getChildNode().clear();
 //        	
 //        	for (int idx = 0; idx < results.size(); idx++) {
-//        	
+//            	
 //        		Map<String, Object> result = results.get(idx);
-//        		
-//        		TreeNodeSecond tn = new TreeNodeSecond();
-//        		tn.setName(result.get("tab_name").toString());
-//        		tn.setType(NodeType.Table);
+//        	
+//        		TreeNodeThird tn = new TreeNodeThird();
+//        		tn.setName(result.get("COLUMN_NAME").toString());
+//        		tn.setType(NodeType.Field);
 //        		tn.setParentNode(this);
-//        		
+//
 //        		if (idx == results.size() - 1) tn.setLastNode(true);
 //        		
 //        		this.getChildNode().add(tn);
 //        	}
-//    		
 //    	}
+//
 //    }
-    
 	
 }

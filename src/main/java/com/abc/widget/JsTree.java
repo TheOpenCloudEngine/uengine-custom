@@ -20,7 +20,7 @@ public class JsTree {
     public void setNodeList(List<TreeNode> nodeList) { this.nodeList = nodeList; }
 
     private void SetData() {
-
+/*
         TreeNode tn = new TreeNode("Hive");
         tn.setChildNode(new ArrayList<TreeNode>());
 
@@ -47,6 +47,7 @@ public class JsTree {
 
         this.getNodeList().add(tn);
         this.getNodeList().add(tn2);
+        */
     }
 
 }

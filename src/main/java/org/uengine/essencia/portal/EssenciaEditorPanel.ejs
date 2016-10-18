@@ -1,0 +1,8 @@
+<% if(value.editor){ %>
+    <% if(value.new || mw3.when == 'Rename'){ %>
+        <%= fields.resourceName.here({when: 'edit'}) %>
+    <% }else{ %>
+        <h1 style="margin-top:0px;margin-bottom:0px;height:30px;line-height:30px;background:#f3f3f3;"><%= value.resourceName %></h3>
+    <% } %>
+<%= fields.editor.here() %>
+<% }%>
