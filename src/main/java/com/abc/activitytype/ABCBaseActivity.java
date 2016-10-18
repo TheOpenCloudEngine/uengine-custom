@@ -14,6 +14,4 @@ public class ABCBaseActivity extends DefaultActivity{
         return (Map<String, String>) instance.getRootProcessInstance().getProperty("", "UserInfo");
     }
 
-    
-
 }
