@@ -194,7 +194,7 @@ public class DataInputActivity extends DefaultActivity {
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
-
+/*
         if(true){
 
             instance.addDebugInfo("[Error] detailed error logs");
@@ -261,7 +261,7 @@ public class DataInputActivity extends DefaultActivity {
 
 
         getOutValue().set(instance, "", "output of " + instance.getName() + ":" + getInputValue());
-
+*/
         super.executeActivity(instance);
     }
 
