@@ -44,14 +44,14 @@ public class AnalysisContainerResource extends ProcessAdminContainerResource{
         }
 
 
-    @ServiceMethod(target = ServiceMethod.TARGET_POPUP, inContextMenu = true)
-    public VersionManager versionManager() throws Exception {
-        VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
-
-        versionManager.load(this /* TODO: find root */);
-
-        MetaworksRemoteService.wrapReturn(new ModalWindow(versionManager, 400, 1000, "Version Manager"));
-
-        return versionManager;
-    }
+//    @ServiceMethod(target = ServiceMethod.TARGET_POPUP, inContextMenu = true)
+//    public VersionManager versionManager() throws Exception {
+//        VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
+//
+//        versionManager.load(this /* TODO: find root */);
+//
+//        MetaworksRemoteService.wrapReturn(new ModalWindow(versionManager, 400, 1000, "Version Manager"));
+//
+//        return versionManager;
+//    }
 }

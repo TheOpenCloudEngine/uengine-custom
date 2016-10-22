@@ -1,14 +1,14 @@
+<div id="subject">objectId = <%=objectId%></div>
 
-<div class="sea_box">
-    <div class="layer_sea">
-        <input name="" id ="searchIptSub_<%=objectId%>" type="text" placeholder="Type Analytics key word"/>
-        <input type="hidden" name="subjectNodeList" id="subjectNodeList" value=""/>
+
+<%
+if(value){
+%>
+<div style="height:100%; padding:0 10px">
+    <div style=" height:100%;background:#fff;overflow:auto;border: 1px solid #aaa">
+        <%=fields.root.here()%>
     </div>
 </div>
-<div style=" height:200px;background:#fff;overflow:auto;border: 1px solid #dcdcdc;border-right:none">
-    <div id="jstreeSub_<%=objectId%>">
-        <ul>
-            <%=fields.nodeList.here()%>
-        </ul>
-    </div>
-</div>
+<%
+}
+%>
