@@ -76,8 +76,8 @@ public class ABCInstanciationPanel extends RoleMappingPanel{
         super.load(defId_);
 
         VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
-
-        defId_ = versionManager.getProductionResourcePath("codi", defId_);
+        versionManager.setAppName("codi");
+        defId_ = versionManager.getProductionResourcePath(defId_);
 
         ProcessDefinition processDefinition = (ProcessDefinition) processManager.getProcessDefinition(defId_);
 
