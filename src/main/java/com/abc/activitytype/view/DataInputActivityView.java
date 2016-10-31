@@ -22,20 +22,21 @@ public class DataInputActivityView extends ActivityView {
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_POPUP)
     public Object showProperty(
         @AutowiredFromClient(
-            payload = "elementViewList[__className=='com.abc.activitytype.view.DataInputActivityView' && toEdge==value.fromEdge].element.outValue.name"
+//                payload = "elementViewList[__className=='com.abc.activitytype.view.DataInputActivityView' && toEdge==value.fromEdge].element.outValue.name"
+                payload = "elementViewList[value.fromEdge.indexOf(toEdge) > -1].element"
         ) Canvas canvas,
         @AutowiredFromClient ProcessVariablePanel processVariablePanel,
         @AutowiredFromClient Session session
     ) throws Exception {
 
         DataInputActivity dia = (DataInputActivity) getElement();
-        if(canvas.getElementViewList()!=null
-                && canvas.getElementViewList().size() > 0
-                && (dia.getOutValue()==null || dia.getOutValue().getName()==null)
-                && ((DataInputActivity)canvas.getElementViewList().get(0).getElement()).getOutValue()!=null){
-
-            dia.setOutValue(((DataInputActivity)canvas.getElementViewList().get(0).getElement()).getOutValue());
-        }
+//        if(canvas.getElementViewList()!=null
+//                && canvas.getElementViewList().size() > 0
+//                && (dia.getOutValue()==null || dia.getOutValue().getName()==null)
+//                && ((DataInputActivity)canvas.getElementViewList().get(0).getElement()).getOutValue()!=null){
+//
+//            dia.setOutValue(((DataInputActivity)canvas.getElementViewList().get(0).getElement()).getOutValue());
+//        }
 
         return showProperty();
     }

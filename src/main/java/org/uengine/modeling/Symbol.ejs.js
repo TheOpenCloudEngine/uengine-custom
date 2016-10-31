@@ -7,7 +7,7 @@ var org_uengine_modeling_Symbol = function(objectId, className){
 ///	this.objectDiv.css('height', '30px');
 
 	this.draggable = function(command){
-		this.objectDiv.find('img').draggable({
+		this.objectDiv/*.find('img')*/.draggable({
 			appendTo: "body",
 			helper: function( event ) {
 				return $(this).clone();

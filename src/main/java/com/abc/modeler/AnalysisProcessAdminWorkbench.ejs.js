@@ -5,6 +5,10 @@ var com_abc_modeler_AnalysisProcessAdminWorkbench = function(objectId, className
     this.objectDivId = mw3._getObjectDivId(this.objectId);
     this.objectDiv = $('#' + this.objectDivId);
 
+    if(this.object.defaultLoadingResourcePath){
+        window.title = this.object.defaultLoadingResourcePath;
+    }
+
     //var layoutOption = {west__size: '125', north__size: '40', togglerLength_open: 0, spacing_open: 0, spacing_closed: 0};
     var layoutOption = {north__size: '40', togglerLength_open: 0, spacing_open: 0, spacing_closed: 0};
 

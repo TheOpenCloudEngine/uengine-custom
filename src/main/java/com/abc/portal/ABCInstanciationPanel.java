@@ -2,6 +2,7 @@ package com.abc.portal;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -75,10 +76,12 @@ public class ABCInstanciationPanel extends RoleMappingPanel{
     public void load(String defId_) throws Exception {
         super.load(defId_);
 
-        VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
-        versionManager.setAppName("codi");
+        if(!new Boolean(true).equals(TransactionContext.getThreadLocalInstance().getSharedContext("isDevelopmentTime"))){
+            VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
+            versionManager.setAppName("codi");
 
-        defId_ = versionManager.getProductionResourcePath(defId_);
+            defId_ = versionManager.getProductionResourcePath(defId_);
+        }
 
         ProcessDefinition processDefinition = (ProcessDefinition) processManager.getProcessDefinition(defId_);
 

@@ -1,11 +1,15 @@
+var org_uengine_social_InstanceMonitorPanel_timer = null;
+
 var org_uengine_social_InstanceMonitorPanel = function(objectId, className){
 
+    this.destroy();
 
-
-        //setTimeout(function(){
-        //        var object = mw3.objects[objectId];
-        //        object.refresh();
-        //}, 3000);
+    //org_uengine_social_InstanceMonitorPanel_timer =
+    //
+    //    setTimeout(function(){
+    //            var object = mw3.objects[objectId];
+    //            object.load();
+    //    }, 5000);
 
 };
 
@@ -17,6 +21,16 @@ org_uengine_social_InstanceMonitorPanel.prototype = {
     endLoading: function(){
             //do nothing about loading effect.
     }
+
+    ,
+    destroy: function(){
+        if(org_uengine_social_InstanceMonitorPanel_timer) {
+            clearTimeout(org_uengine_social_InstanceMonitorPanel_timer);
+            org_uengine_social_InstanceMonitorPanel_timer = null;
+        }
+    }
+
+
 
 };
 

@@ -38,7 +38,7 @@ public class DataInputActivity extends DefaultActivity {
 
     @Override
     public boolean isQueuingEnabled() {
-        return false;
+        return true;
     }
 
     String inputTable;
@@ -280,5 +280,10 @@ public class DataInputActivity extends DefaultActivity {
         // blah blah....
 
 
+    }
+
+    @Override
+    public void resume(ProcessInstance instance) throws Exception {
+        super.resume(instance);
     }
 }
