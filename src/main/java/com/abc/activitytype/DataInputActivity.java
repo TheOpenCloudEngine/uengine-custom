@@ -191,9 +191,41 @@ public class DataInputActivity extends DefaultActivity {
 
     }
 
+    int sleepMS;
+        public int getSleepMS() {
+            return sleepMS;
+        }
+
+        public void setSleepMS(int sleepMS) {
+            this.sleepMS = sleepMS;
+        }
+
+
+    boolean makeFault;
+        public boolean isMakeFault() {
+            return makeFault;
+        }
+
+        public void setMakeFault(boolean makeFault) {
+            this.makeFault = makeFault;
+        }
+
+
+    @Override
+    public void stop(ProcessInstance instance) throws Exception {
+        super.stop(instance);
+
+        System.out.println("rolling back");
+    }
 
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
+
+        Thread.sleep(getSleepMS());
+
+        if(isMakeFault())
+            throw new Exception("Fault!");
+
 /*
         if(true){
 
