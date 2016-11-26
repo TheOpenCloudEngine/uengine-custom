@@ -192,8 +192,35 @@ public class DataInputActivity extends DefaultActivity {
     }
 
 
+    int sleepMilliSecond;
+        public int getSleepMilliSecond() {
+            return sleepMilliSecond;
+        }
+
+        public void setSleepMilliSecond(int sleepMilliSecond) {
+            this.sleepMilliSecond = sleepMilliSecond;
+        }
+
+
+    boolean makeFault;
+        public boolean isMakeFault() {
+            return makeFault;
+        }
+
+        public void setMakeFault(boolean makeFault) {
+            this.makeFault = makeFault;
+        }
+
+
     @Override
     protected void executeActivity(final ProcessInstance instance) throws Exception {
+
+        Thread.sleep(getSleepMilliSecond());
+
+        if(isMakeFault()){
+            throw new Exception("Fault!");
+        }
+
 /*
         if(true){
 
